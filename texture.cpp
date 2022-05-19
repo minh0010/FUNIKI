@@ -1,5 +1,16 @@
 #include "texture.h"
 
+bool Load_Game_Font()
+{
+	GAME_FONT = TTF_OpenFont("GAME_FONT/SuperMario256.ttf", 26);
+	if (GAME_FONT == NULL)
+	{
+		cout << "fail to load game font\n";
+		return false;
+	}
+
+	return true;
+}
 
 TEXTURE::TEXTURE()
 {

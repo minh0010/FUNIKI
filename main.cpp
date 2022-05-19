@@ -200,11 +200,24 @@ bool init()
 		return false;
 	}
 
+	if (TTF_Init() == -1)
+	{
+		cout << "SDL_ttf could not initialize! SDL_ttf Error: TTF_GetError\n";
+		return false;
+	}
+
 	return true;
 }
 
 bool load_media()
 {
+	// load game font
+	if (!Load_Game_Font())
+	{
+		return false;
+	}
+
+
 	// load tile map level 1 
 	if (!load_map_level_1(map1))
 	{
