@@ -59,6 +59,35 @@ bool TEXTURE::load_texture_from_file(string path, SDL_Renderer* screen, bool use
 	return mTexture != NULL;
 }
 
+#if defined(SDL_TTF_MAJOR_VERSION)
+bool TEXTURE::loadFromRenderedText(std::string textureText, SDL_Color textColor, SDL_Renderer* screen)
+{
+	free();
+
+	SDL_Surface* textSurface = TTF_RenderText_Solid(GAME_FONT, textureText.c_str(), textColor);
+	if (textSurface != NULL)
+	{
+		mTexture = SDL_CreateTextureFromSurface(screen, textSurface);
+		if (mTexture == NULL)
+		{
+			cout << "Unable to create texture from rendered text! SDL Error";
+		}
+		else
+		{
+			mWidth = textSurface->w;
+			mHeight = textSurface->h;
+		}
+		SDL_FreeSurface(textSurface);
+	}
+	else
+	{
+		cout << "Unable to render text surface! SDL_ttf Error\n";
+	}
+
+	return mTexture != NULL;
+}
+#endif
+
 void TEXTURE::render_texture_on_screen(int x, int y, SDL_Renderer* screen, SDL_Rect* clip, double angle, SDL_Point* center, SDL_RendererFlip flip)
 {
 	SDL_Rect render_quad = { x,y,mWidth,mHeight };

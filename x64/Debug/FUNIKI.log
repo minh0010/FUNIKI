@@ -24,5 +24,4 @@ C:\Users\Admin\Desktop\vs\FUNIKI\SDL\SDL2-2.0.20\include\SDL_stdinc.h(568): mess
   texture.cpp
   tiles_map.cpp
   Generating Code...
-direction_vector.obj : warning LNK4204: 'C:\Users\Admin\Desktop\vs\FUNIKI\x64\Debug\vc143.pdb' is missing debugging information for referencing module; linking object as if no debug info
   FUNIKI.vcxproj -> C:\Users\Admin\Desktop\vs\FUNIKI\x64\Debug\FUNIKI.exe

@@ -39,6 +39,8 @@ public:
 private:
 	TEXTURE Display_Blood_Bar_Texture;
 	TEXTURE Remain_Blood_Texture;
+	TEXTURE Blood_Index;
+	stringstream blood_text;
 
 	SDL_Rect Remain_Blood_Clip;
 	SDL_Rect Display_Blood_Bar;

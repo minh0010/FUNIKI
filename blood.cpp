@@ -5,6 +5,8 @@ BLOOD::BLOOD()
 	Remain_Blood_Clip = { 0,0,0,0 };
 	Display_Blood_Bar = { 0,0,0,0 };
 
+	blood_text.str("");
+
 	Total_Blood = 0;
 	save_display_blood = 0;
 
@@ -42,6 +44,16 @@ void BLOOD::Render_Blood_Bar(SDL_Renderer* screen)
 {
 	Display_Blood_Bar_Texture.render_texture_on_screen(Blood_Display_Blood_Bar_Clip_x, Blood_Display_Blood_Bar_Clip_y, screen, &Display_Blood_Bar);
 	Remain_Blood_Texture.render_texture_on_screen(Blood_Render_Remain_Blood_Clip_x, Blood_Render_Remain_Blood_Clip_y, screen, &Remain_Blood_Clip);
+
+	blood_text.str("");
+	blood_text << Current_Blood;
+	if (!Blood_Index.loadFromRenderedText(blood_text.str().c_str(), FONT_COLOR, screen))
+	{
+		cout << "fail to load blood index";
+		return;
+	}
+
+	Blood_Index.render_texture_on_screen(Blood_Render_Remain_Blood_Clip_x, Blood_Render_Remain_Blood_Clip_y, screen);
 }
 
 void BLOOD::Set_Start_Blood(const int& val)
