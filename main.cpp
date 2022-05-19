@@ -38,6 +38,8 @@ bool load_map_level_1(TILE* tiles[]);
 
 void reload_game();
 
+void play_game();
+
 int main(int arv, char* argc[])
 {
 	if (!init())
@@ -52,110 +54,9 @@ int main(int arv, char* argc[])
 		return 0;
 	}
 
-	bool quit = false;
-	SDL_Event e;
-	SDL_Rect camera = { 0,0,SCREEN_WIDTH,SCREEN_HEIGHT };
-
-	srand((unsigned int)time(NULL));
-
-	Uint32 timemm = 0;
-
-	while (!quit)
-	{
-		FUNIKI_MENU.Handle_sound();
-		if (FUNIKI_MENU.Get_Request_A_Reload())
-		{
-			reload_game();
-			FUNIKI_MENU.Set_Request_A_Reload(false);
-		}
-
-		while (SDL_PollEvent(&e) != 0)
-		{
-			if (e.type == SDL_QUIT)
-			{
-				quit = true;
-			}
-			FUNIKI_MENU.Handle_All_Button(e, quit);
-
-			if (FUNIKI_MENU.Get_Screen_Status() == PLAY_SCREEN)
-			{
-				main_Reaper.Handle_Reaper(e, camera);
-			}
-		}
-
-		SDL_SetRenderDrawColor(RENDER, 40, 40, 40, 255);
-		SDL_RenderClear(RENDER);
-
-		FUNIKI_MENU.Render_Background(RENDER);
-
-		if (FUNIKI_MENU.Get_Screen_Status() == PLAY_SCREEN)
-		{
-			for (int i = 0; i < TOTAL_TILE_LEVEL_1; ++i) map1[i]->render_tile(camera, RENDER);
-
-
-			// ingame boss 
-			if (main_Jungle_Pig.Get_Is_Jungle_Pig_Alive())
-			{
-				if (player_in_play_area(main_Reaper.Get_Reaper_Collision_Box()))
-				{
-					main_Jungle_Pig.Set_It_Time_To_Fight(true);
-					close_gate_level_1(map1, gate_level_1);
-				}
-
-				main_Jungle_Pig.Handle_Skills(RENDER, map1, camera);
-				main_Jungle_Pig.Auto();
-				main_Jungle_Pig.Render_Jungle_Pig(RENDER, camera);
-				main_Jungle_Pig.Render_Jungle_Pig_Blood(RENDER);
-
-				if (player_in_play_area(main_Reaper.Get_Reaper_Collision_Box()))
-				{
-					main_Jungle_Pig.Handle_Life(main_Reaper.Get_Bullet_List());
-				}
-			}
-			else
-			{
-				main_Jungle_Pig.Clear_Boss();
-				open_gate_level_1(map1, gate_level_1);
-			}
-
-
-			// ingame player
-			if (main_Reaper.Get_Is_Reaper_Alive())
-			{
-				main_Reaper.Handle_gun(camera);
-				main_Reaper.Reaper_Move(map1);
-				main_Reaper.Set_Reaper_Camera(camera);
-
-				main_Reaper.Handle_Reaper_Life(main_Jungle_Pig.Get_Bullet_List(), main_Jungle_Pig.Get_Meteo_List());
-
-				main_Reaper.Render_Reaper_On_Screen(RENDER, camera);
-				main_Reaper.Handle_Bullet_List(RENDER, camera, map1, main_Jungle_Pig.Get_Jungle_Pig_Collision_Box());
-				main_Reaper.Render_Reaper_Gun(RENDER);
-				main_Reaper.Render_Reaper_Blood(RENDER);
-
-				if (player_in_win_area(main_Reaper.Get_Reaper_Collision_Box()))
-				{
-					FUNIKI_MENU.Set_Screen_Status(SCREEN_AFTER_WIN);
-					FUNIKI_MENU.Set_Screen_After_Win();
-					FUNIKI_MENU.Set_Request_A_Reload(true);
-				}
-			}
-			else
-			{
-				FUNIKI_MENU.Set_Screen_Status(SCREEN_AFTER_LOSE);
-				FUNIKI_MENU.Set_Screen_After_Lose();
-				FUNIKI_MENU.Set_Request_A_Reload(true);
-			}
-		}
-
-		FUNIKI_MENU.Render_Menu_Button(RENDER);
-		mouse.Render_Mouse(RENDER);
-
-		SDL_RenderPresent(RENDER);
-	}
+	play_game();
 
 	close(map1);
-	system("pause");
 	return 0;
 }
 
@@ -366,4 +267,109 @@ void reload_game()
 	main_Reaper.Reset_From_Start();
 	main_Jungle_Pig.Reset_From_Start();
 	open_gate_level_1(map1, gate_level_1);
+}
+
+void play_game()
+{
+	bool quit = false;
+	SDL_Event e;
+	SDL_Rect camera = { 0,0,SCREEN_WIDTH,SCREEN_HEIGHT };
+
+	srand((unsigned int)time(NULL));
+
+	Uint32 timemm = 0;
+
+	while (!quit)
+	{
+		FUNIKI_MENU.Handle_sound();
+		if (FUNIKI_MENU.Get_Request_A_Reload())
+		{
+			reload_game();
+			FUNIKI_MENU.Set_Request_A_Reload(false);
+		}
+
+		while (SDL_PollEvent(&e) != 0)
+		{
+			if (e.type == SDL_QUIT)
+			{
+				quit = true;
+			}
+			FUNIKI_MENU.Handle_All_Button(e, quit);
+
+			if (FUNIKI_MENU.Get_Screen_Status() == PLAY_SCREEN)
+			{
+				main_Reaper.Handle_Reaper(e, camera);
+			}
+		}
+
+		SDL_SetRenderDrawColor(RENDER, 40, 40, 40, 255);
+		SDL_RenderClear(RENDER);
+
+		FUNIKI_MENU.Render_Background(RENDER);
+
+		if (FUNIKI_MENU.Get_Screen_Status() == PLAY_SCREEN)
+		{
+			for (int i = 0; i < TOTAL_TILE_LEVEL_1; ++i) map1[i]->render_tile(camera, RENDER);
+
+
+			// ingame boss 
+			if (main_Jungle_Pig.Get_Is_Jungle_Pig_Alive())
+			{
+				if (player_in_play_area(main_Reaper.Get_Reaper_Collision_Box()))
+				{
+					main_Jungle_Pig.Set_It_Time_To_Fight(true);
+					close_gate_level_1(map1, gate_level_1);
+				}
+
+				main_Jungle_Pig.Handle_Skills(RENDER, map1, camera);
+				main_Jungle_Pig.Auto();
+				main_Jungle_Pig.Render_Jungle_Pig(RENDER, camera);
+				main_Jungle_Pig.Render_Jungle_Pig_Blood(RENDER);
+
+				if (player_in_play_area(main_Reaper.Get_Reaper_Collision_Box()))
+				{
+					main_Jungle_Pig.Handle_Life(main_Reaper.Get_Bullet_List());
+				}
+			}
+			else
+			{
+				main_Jungle_Pig.Clear_Boss();
+				open_gate_level_1(map1, gate_level_1);
+			}
+
+
+			// ingame player
+			if (main_Reaper.Get_Is_Reaper_Alive())
+			{
+				main_Reaper.Handle_gun(camera);
+				main_Reaper.Reaper_Move(map1);
+				main_Reaper.Set_Reaper_Camera(camera);
+
+				main_Reaper.Handle_Reaper_Life(main_Jungle_Pig.Get_Bullet_List(), main_Jungle_Pig.Get_Meteo_List());
+
+				main_Reaper.Render_Reaper_On_Screen(RENDER, camera);
+				main_Reaper.Handle_Bullet_List(RENDER, camera, map1, main_Jungle_Pig.Get_Jungle_Pig_Collision_Box());
+				main_Reaper.Render_Reaper_Gun(RENDER);
+				main_Reaper.Render_Reaper_Blood(RENDER);
+
+				if (player_in_win_area(main_Reaper.Get_Reaper_Collision_Box()))
+				{
+					FUNIKI_MENU.Set_Screen_Status(SCREEN_AFTER_WIN);
+					FUNIKI_MENU.Set_Screen_After_Win();
+					FUNIKI_MENU.Set_Request_A_Reload(true);
+				}
+			}
+			else
+			{
+				FUNIKI_MENU.Set_Screen_Status(SCREEN_AFTER_LOSE);
+				FUNIKI_MENU.Set_Screen_After_Lose();
+				FUNIKI_MENU.Set_Request_A_Reload(true);
+			}
+		}
+
+		FUNIKI_MENU.Render_Menu_Button(RENDER);
+		mouse.Render_Mouse(RENDER);
+
+		SDL_RenderPresent(RENDER);
+	}
 }

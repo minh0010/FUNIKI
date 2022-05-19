@@ -32,21 +32,25 @@ bool BLOOD::Load_Blood_Texture(string path, SDL_Renderer* screen)
 		cout << "fail to load display blood bar\n";
 		return false;
 	}
+
 	if (!Remain_Blood_Texture.load_texture_from_file(path, screen, true, 0, 125, 180))
 	{
 		cout << "fail to load display blood bar\n";
 		return false;
 	}
+
 	return true;
 }
 
 void BLOOD::Render_Blood_Bar(SDL_Renderer* screen)
 {
 	Display_Blood_Bar_Texture.render_texture_on_screen(Blood_Display_Blood_Bar_Clip_x, Blood_Display_Blood_Bar_Clip_y, screen, &Display_Blood_Bar);
+	
 	Remain_Blood_Texture.render_texture_on_screen(Blood_Render_Remain_Blood_Clip_x, Blood_Render_Remain_Blood_Clip_y, screen, &Remain_Blood_Clip);
 
 	blood_text.str("");
 	blood_text << Current_Blood;
+	
 	if (!Blood_Index.loadFromRenderedText(blood_text.str().c_str(), FONT_COLOR, screen))
 	{
 		cout << "fail to load blood index";

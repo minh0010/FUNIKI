@@ -13,8 +13,10 @@ using namespace std;
 #define SCREEN_WIDTH 1000
 #define SCREEN_HEIGHT 700
 
+
 static TTF_Font* GAME_FONT = NULL;
 static SDL_Color FONT_COLOR = { 255,255,255,255 };
+
 bool Load_Game_Font();
 
 
