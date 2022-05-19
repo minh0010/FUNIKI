@@ -42,7 +42,7 @@ public:
 
 	void Set_Reaper_Camera(SDL_Rect& camera);
 
-	void Reaper_Move(TILE* tiles[], SDL_Rect boss_rect);
+	void Reaper_Move(TILE* tiles[]);
 
 
 

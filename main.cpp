@@ -92,6 +92,8 @@ int main(int arv, char* argc[])
 		{
 			for (int i = 0; i < TOTAL_TILE_LEVEL_1; ++i) map1[i]->render_tile(camera, RENDER);
 
+
+			// ingame boss 
 			if (main_Jungle_Pig.Get_Is_Jungle_Pig_Alive())
 			{
 				if (player_in_play_area(main_Reaper.Get_Reaper_Collision_Box()))
@@ -117,10 +119,11 @@ int main(int arv, char* argc[])
 			}
 
 
+			// ingame player
 			if (main_Reaper.Get_Is_Reaper_Alive())
 			{
 				main_Reaper.Handle_gun(camera);
-				main_Reaper.Reaper_Move(map1, main_Jungle_Pig.Get_Jungle_Pig_Collision_Box());
+				main_Reaper.Reaper_Move(map1);
 				main_Reaper.Set_Reaper_Camera(camera);
 
 				main_Reaper.Handle_Reaper_Life(main_Jungle_Pig.Get_Bullet_List(), main_Jungle_Pig.Get_Meteo_List());
