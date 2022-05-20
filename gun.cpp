@@ -29,19 +29,35 @@ bool Gun::Load_Gun_Texture(SDL_Renderer* screen)
 void Gun::Update(SDL_Rect& camera)
 {
 	int x, y;
+
+	// get mouse position
 	SDL_GetMouseState(&x, &y);
 
+	// create 2 vector
 	Direction_Vector from_gun_to_mouse = Direction_Vector(float(x - gun_rect.x), float(y - gun_rect.y));
 	Direction_Vector unit_vector = Direction_Vector(1.0f, 0.0f);
 
+	// calculate cosin value between two vector
 	float cos_val = Cosin_Value_Between_Two_Vector(from_gun_to_mouse, unit_vector);
 
+	// change cosin value to degree
 	Degree = (double)acos(cos_val) * 180 / M_PI;
 
+	// determined mouse.y is lower or higher than gun
 	if (y < gun_rect.y) Degree = 360.0 - Degree;
 
-	if (x < gun_rect.x) Flip_Gun = SDL_FLIP_VERTICAL;
-	else if (x > gun_rect.x) Flip_Gun = SDL_FLIP_NONE;
+	// determined mouse.x is on the left or right of the gun
+	// if on the left then flip gun
+	if (x < gun_rect.x)
+	{
+		Flip_Gun = SDL_FLIP_VERTICAL;
+
+	}
+	// if on the right don't flip gun
+	else if (x > gun_rect.x)
+	{
+		Flip_Gun = SDL_FLIP_NONE;
+	}
 }
 
 void Gun::Render_Gun(SDL_Renderer* screen)

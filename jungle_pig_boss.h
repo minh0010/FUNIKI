@@ -43,8 +43,8 @@ static Direction_Vector v[12]
 
 enum BOSS_SKILL
 {
-	FIRE_BULLET = 1,
-	SUMMON_METEO = 2
+	FIRE_BULLET_IN_12_DIRECTION = 1,
+	SUMMON_METEO = 2,
 };
 
 class JUNGLEPIG : public TEXTURE
@@ -64,9 +64,11 @@ public:
 
 	void Generate_New_Position();
 
-	void Auto();
+	void Auto(SDL_Rect player_rect);
 
-	void Load_Boss_Bullet();
+	void Load_Boss_Bullet_Fire_Toward_Player(SDL_Rect player_rect);
+
+	void Load_Boss_Bullet_Fire_In_12_Direction();
 
 	void Load_Boss_Meteo();
 
@@ -114,6 +116,7 @@ private:
 	int jungle_pig_skill;
 	Uint32 skills_rotTime;
 	Uint32 move_rotTime;
+	Uint32 fire_toward_to_player_rotTime;
 	int BOSS_MODE;
 
 	bool it_time_to_fight;

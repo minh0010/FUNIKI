@@ -7,6 +7,7 @@ BOSS_BULLET::BOSS_BULLET()
 {
 	boss_bullet_rect = { 0,0,BOSS_BULLET_DISPLAY_WIDTH,BOSS_BULLET_DISPLAY_HEIGHT };
 	is_bullet_move = false;
+	BOSS_BULLET_MOVE_SPEED = 0;
 	move_direction = Direction_Vector(0.0, 0.0);
 }
 

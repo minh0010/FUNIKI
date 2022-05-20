@@ -5,7 +5,7 @@
 
 const int GUN_SIZE = 40;
 
-class Gun : TEXTURE
+class Gun : public TEXTURE
 {
 public:
 	Gun();

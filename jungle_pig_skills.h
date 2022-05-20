@@ -10,9 +10,9 @@
 
 const int BOSS_BULLET_DISPLAY_WIDTH = 60;
 const int BOSS_BULLET_DISPLAY_HEIGHT = 60;
-const int BOSS_BULLET_MOVE_SPEED = 5;
 
-const int BOSS_BULLET_DAMAGE = 20;
+
+const int BOSS_BULLET_DAMAGE = 10;
 static TEXTURE boss_bullet_texture;
 
 class BOSS_BULLET
@@ -32,6 +32,7 @@ public:
 
 	void Set_Is_BOSS_BULLET_Move(const bool& val) { is_bullet_move = val; }
 
+	void Set_Bullet_Move_Speed(const int& val) { BOSS_BULLET_MOVE_SPEED = val; }
 
 	SDL_Rect Get_BOSS_BULLET_Rect() const { return boss_bullet_rect; }
 
@@ -39,7 +40,9 @@ public:
 private:
 	SDL_Rect boss_bullet_rect;
 	bool is_bullet_move;
-
+	
+	int BOSS_BULLET_MOVE_SPEED;
+	
 	Direction_Vector move_direction;
 };
 

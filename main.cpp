@@ -294,6 +294,7 @@ void play_game()
 			{
 				quit = true;
 			}
+
 			FUNIKI_MENU.Handle_All_Button(e, quit);
 
 			if (FUNIKI_MENU.Get_Screen_Status() == PLAY_SCREEN)
@@ -322,7 +323,7 @@ void play_game()
 				}
 
 				main_Jungle_Pig.Handle_Skills(RENDER, map1, camera);
-				main_Jungle_Pig.Auto();
+				main_Jungle_Pig.Auto(main_Reaper.Get_Reaper_Rect());
 				main_Jungle_Pig.Render_Jungle_Pig(RENDER, camera);
 				main_Jungle_Pig.Render_Jungle_Pig_Blood(RENDER);
 

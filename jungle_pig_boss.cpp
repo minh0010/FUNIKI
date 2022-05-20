@@ -17,6 +17,8 @@ JUNGLEPIG::JUNGLEPIG()
 	jungle_pig_skill = 0;
 	skills_rotTime = 0;
 	move_rotTime = 0;
+	fire_toward_to_player_rotTime;
+
 	BOSS_MODE = EASY;
 
 	it_time_to_fight = false;
@@ -152,7 +154,7 @@ void JUNGLEPIG::Generate_New_Position()
 	is_jungle_pig_move = true;
 }
 
-void JUNGLEPIG::Auto()
+void JUNGLEPIG::Auto(SDL_Rect player_rect)
 {
 	if (it_time_to_fight)
 	{
@@ -170,45 +172,129 @@ void JUNGLEPIG::Auto()
 		{
 			skills_rotTime = SDL_GetTicks();
 
+			// get random skills
 			jungle_pig_skill = rand() % 2 + 1;
-			if (jungle_pig_skill == FIRE_BULLET)
+
+			if (jungle_pig_skill == FIRE_BULLET_IN_12_DIRECTION)
 			{
-				Load_Boss_Bullet();
+				Load_Boss_Bullet_Fire_In_12_Direction();
 			}
 			else if (jungle_pig_skill == SUMMON_METEO)
 			{
 				Load_Boss_Meteo();
 			}
 		}
+
+		// check boss mode to fire bullet
+		if (BOSS_MODE == EASY)
+		{
+			if (SDL_GetTicks() - fire_toward_to_player_rotTime >= 2000)
+			{
+				fire_toward_to_player_rotTime = SDL_GetTicks();
+				Load_Boss_Bullet_Fire_Toward_Player(player_rect);
+			}
+		}
+		else if (BOSS_MODE == MEDIUM)
+		{
+			if (SDL_GetTicks() - fire_toward_to_player_rotTime >= 1500)
+			{
+				fire_toward_to_player_rotTime = SDL_GetTicks();
+				Load_Boss_Bullet_Fire_Toward_Player(player_rect);
+			}
+		}
+		else if (BOSS_MODE == HARD)
+		{
+			if (SDL_GetTicks() - fire_toward_to_player_rotTime >= 1000)
+			{
+				fire_toward_to_player_rotTime = SDL_GetTicks();
+				Load_Boss_Bullet_Fire_Toward_Player(player_rect);
+			}
+		}
 	}
 	else
 	{
+		fire_toward_to_player_rotTime = SDL_GetTicks();
 		move_rotTime = SDL_GetTicks();
 		skills_rotTime = SDL_GetTicks();
 	}
 }
 
-void JUNGLEPIG::Load_Boss_Bullet()
+void JUNGLEPIG::Load_Boss_Bullet_Fire_Toward_Player(SDL_Rect player_rect)
+{
+	for (int i = 0; i < 5; ++i)
+	{
+		// create new bullet
+		BOSS_BULLET* newBullet = new BOSS_BULLET;
+
+		// set start render point of bullet
+		newBullet->Set_start_position(Jungle_Pig_Rect.x + JUNGLE_PIG_WIDTH / 3, Jungle_Pig_Rect.y + JUNGLE_PIG_HEIGHT / 3);
+
+		// set move direction of bullet by using direction vector
+
+		// normalize vector by using equation: V / |V|;
+		// with |V| = sqrt(a*a + b*b)
+		// after normalize vector has the form (a,b) : 0 <= a <= 1,  0 <= b <= 1
+
+		// get random end vector position in range around player
+		int x = rand() % (player_rect.w + 100) + player_rect.x - 50;
+		int y = rand() % (player_rect.h + 100) + player_rect.y - 50;
+
+		// normal vector
+		Direction_Vector bullet_move_direction = Direction_Vector(float(x - Jungle_Pig_Rect.x - JUNGLE_PIG_WIDTH / 3), float(y - Jungle_Pig_Rect.y - JUNGLE_PIG_HEIGHT / 3));
+
+		// |V|
+		float length = bullet_move_direction.Get_Vector_Length();
+
+		// V / |V|
+		Direction_Vector nomalize_vector = bullet_move_direction / length;
+
+		// use normalize vector to set bullet move direction
+		newBullet->Set_Vector_Move_Direction(nomalize_vector);
+
+		// set bullet moving on screen
+		newBullet->Set_Is_BOSS_BULLET_Move(true);
+
+		// set bullet moving speed
+		newBullet->Set_Bullet_Move_Speed(10);
+
+		// push new bullet to list
+		bullet_list.push_back(newBullet);
+	}
+}
+
+void JUNGLEPIG::Load_Boss_Bullet_Fire_In_12_Direction()
 {
 	for (int i = 0; i < 12; ++i)
 	{
+		// create new bullet
 		BOSS_BULLET* newBullet = new BOSS_BULLET;
+
+		// set start render point of bullet
 		newBullet->Set_start_position(Jungle_Pig_Rect.x + JUNGLE_PIG_WIDTH / 2, Jungle_Pig_Rect.y + JUNGLE_PIG_HEIGHT / 2);
+
+		// set bullet move directon with vector 
 		newBullet->Set_Vector_Move_Direction(v[i]);
+
+		// set bullet moving on screen
 		newBullet->Set_Is_BOSS_BULLET_Move(true);
 
+		// set bullet moving speed
+		newBullet->Set_Bullet_Move_Speed(5);
+
+		// push new bullet to list
 		bullet_list.push_back(newBullet);
 	}
 }
 
 void JUNGLEPIG::Load_Boss_Meteo()
 {
-	int k = 0;
-	if (BOSS_MODE == EASY) k = 5;
-	else if (BOSS_MODE == MEDIUM) k = 10;
-	else if (BOSS_MODE == HARD) k = 15;
+	// number meteo depend on boss mode
+	int number_meteo = 0;
+	if (BOSS_MODE == EASY) number_meteo = 5;
+	else if (BOSS_MODE == MEDIUM) number_meteo = 7;
+	else if (BOSS_MODE == HARD) number_meteo = 10;
 
-	for (int i = 0; i < k; ++i)
+	for (int i = 0; i < number_meteo; ++i)
 	{
 		int x = rand() % 880 + 441;
 		int y = rand() % 560 + 401;
