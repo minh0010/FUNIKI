@@ -27,7 +27,7 @@ bool MENU::Load_All_Button_And_Background_Display(SDL_Renderer* screen)
 {
 
 	// load menu button
-	if (!start_play_button.load_button(screen, "GAME_TEXTURE/GAME_MENU_BUTTON/play_button.png", true, 255, 255, 255))
+	if (!start_play_button.load_button(screen, "GAME_TEXTURE/GAME_MENU_BUTTON/play_button.png", true, 0, 0, 0))
 	{
 		cout << "fail to load button texture\n";
 		return false;
@@ -36,11 +36,11 @@ bool MENU::Load_All_Button_And_Background_Display(SDL_Renderer* screen)
 	{
 		start_play_button.Set_Display_Width(150);
 		start_play_button.Set_Display_Height(40);
-		start_play_button.set_button_rect(425, 500, 150, 40);
-		start_play_button.set_button_clip_out(195, 55, 230, 80);
-		start_play_button.set_button_clip_over(195, 255, 230, 80);
-		start_play_button.set_button_clip_down(195, 455, 230, 80);
-		start_play_button.set_button_clip_up(195, 255, 230, 80);
+		start_play_button.set_button_rect(400, 475, 150, 40);
+		start_play_button.set_button_clip_out(190, 57, 210, 75);
+		start_play_button.set_button_clip_over(190, 257, 210, 75);
+		start_play_button.set_button_clip_down(190, 457, 210, 75);
+		start_play_button.set_button_clip_up(190, 257, 210, 75);
 		start_play_button.set_in_use_button(true);
 	}
 
