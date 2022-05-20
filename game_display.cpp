@@ -95,7 +95,7 @@ bool MENU::Load_All_Button_And_Background_Display(SDL_Renderer* screen)
 		continue_button.set_in_use_button(false);
 	}
 
-	if (!back_to_start_button.load_button(screen, "GAME_TEXTURE/GAME_MENU_BUTTON/back_button.png", true, 255, 255, 255))
+	if (!back_to_start_button.load_button(screen, "GAME_TEXTURE/GAME_MENU_BUTTON/back_button.png", true, 0, 0, 0))
 	{
 		cout << "fail to load button texture\n";
 		return false;
@@ -105,10 +105,10 @@ bool MENU::Load_All_Button_And_Background_Display(SDL_Renderer* screen)
 		back_to_start_button.Set_Display_Width(210);
 		back_to_start_button.Set_Display_Height(70);
 		back_to_start_button.set_button_rect(450, (SCREEN_HEIGHT / 2), 210, 70);
-		back_to_start_button.set_button_clip_out(170, 45, 260, 95);
-		back_to_start_button.set_button_clip_over(170, 245, 260, 95);
-		back_to_start_button.set_button_clip_down(170, 445, 260, 95);
-		back_to_start_button.set_button_clip_up(170, 245, 260, 95);
+		back_to_start_button.set_button_clip_out(200, 55, 205, 75);
+		back_to_start_button.set_button_clip_over(200, 255, 205, 75);
+		back_to_start_button.set_button_clip_down(200, 455, 205, 75);
+		back_to_start_button.set_button_clip_up(200, 255, 205, 75);
 		back_to_start_button.set_in_use_button(false);
 	}
 
