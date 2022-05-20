@@ -1,2 +1,14 @@
-﻿  game_display.cpp
+﻿  bullet.cpp
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.20348.0\ucrt\corecrt_math_defines.h(28,1): warning C4005: 'M_PI': macro redefinition
+C:\Users\Admin\Desktop\vs\FUNIKI\SDL\SDL2-2.0.20\include\SDL_stdinc.h(568): message : see previous definition of 'M_PI'
+  jungle_pig_boss.cpp
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.20348.0\ucrt\corecrt_math_defines.h(28,1): warning C4005: 'M_PI': macro redefinition
+C:\Users\Admin\Desktop\vs\FUNIKI\SDL\SDL2-2.0.20\include\SDL_stdinc.h(568): message : see previous definition of 'M_PI'
+  main.cpp
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.20348.0\ucrt\corecrt_math_defines.h(28,1): warning C4005: 'M_PI': macro redefinition
+C:\Users\Admin\Desktop\vs\FUNIKI\SDL\SDL2-2.0.20\include\SDL_stdinc.h(568): message : see previous definition of 'M_PI'
+  player.cpp
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.20348.0\ucrt\corecrt_math_defines.h(28,1): warning C4005: 'M_PI': macro redefinition
+C:\Users\Admin\Desktop\vs\FUNIKI\SDL\SDL2-2.0.20\include\SDL_stdinc.h(568): message : see previous definition of 'M_PI'
+  Generating Code...
   FUNIKI.vcxproj -> C:\Users\Admin\Desktop\vs\FUNIKI\x64\Debug\FUNIKI.exe

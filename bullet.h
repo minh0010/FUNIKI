@@ -9,13 +9,13 @@
 
 const int BULLET_DISPLAY_WIDTH = 10;
 const int BULLET_DISPLAY_HEIGHT = 10;
-const int BULLET_DAMAGE = 1000;
+const int BULLET_DAMAGE = 20;
 
 
 class BULLET
 {
 public:
-	const int BULLET_MOVE_SPEED = 20;
+	const int BULLET_MOVE_SPEED = 25;
 
 
 	BULLET();

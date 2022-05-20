@@ -6,7 +6,7 @@
 #include "texture.h"
 
 const int REAPER_TOTAL_BLOOD = 200;
-const int JUNGLE_PIG_TOTAL_BLOOD = 2000;
+const int JUNGLE_PIG_TOTAL_BLOOD = 1000;
 
 class BLOOD
 {

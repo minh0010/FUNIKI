@@ -16,7 +16,7 @@
 
 const int REAPER_WIDTH = 100;
 const int REAPER_HEIGHT = 120;
-const int REAPER_MOVE_SPEED = 8;
+const int REAPER_MOVE_SPEED = 10;
 
 const int Reaper_number_idle_frame = 18;
 const int Reaper_number_runing_frame = 12;

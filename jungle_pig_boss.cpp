@@ -255,7 +255,7 @@ void JUNGLEPIG::Load_Boss_Bullet_Fire_Toward_Player(SDL_Rect player_rect)
 		newBullet->Set_Is_BOSS_BULLET_Move(true);
 
 		// set bullet moving speed
-		newBullet->Set_Bullet_Move_Speed(10);
+		newBullet->Set_Bullet_Move_Speed(15);
 
 		// push new bullet to list
 		bullet_list.push_back(newBullet);
