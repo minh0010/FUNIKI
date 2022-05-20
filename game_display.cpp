@@ -1,4 +1,7 @@
 #include <iomanip>
+#include <vector>
+#include <fstream>
+#include <algorithm>
 
 #include "game_display.h"
 
@@ -21,13 +24,6 @@ MENU::MENU()
 
 MENU::~MENU()
 {
-	start_play_button.free();
-	quit_button.free();
-	mini_menu_button.free();
-	continue_button.free();
-	back_to_start_button.free();
-	yes_button.free();
-	no_button.free();
 }
 
 bool MENU::Load_All_Button_And_Background_Display(SDL_Renderer* screen)
@@ -176,9 +172,9 @@ bool MENU::Load_All_Button_And_Background_Display(SDL_Renderer* screen)
 	}
 	else
 	{
-		turn_on_help_screen_button.Set_Display_Width(40);
-		turn_on_help_screen_button.Set_Display_Height(40);
-		turn_on_help_screen_button.set_button_rect(SCREEN_WIDTH - 195, SCREEN_HEIGHT - 65, 40, 40);
+		turn_on_help_screen_button.Set_Display_Width(45);
+		turn_on_help_screen_button.Set_Display_Height(45);
+		turn_on_help_screen_button.set_button_rect(SCREEN_WIDTH - 200, SCREEN_HEIGHT - 70, 45, 45);
 		turn_on_help_screen_button.set_button_clip_out(70, 55, 57, 80);
 		turn_on_help_screen_button.set_button_clip_over(70, 255, 57, 80);
 		turn_on_help_screen_button.set_button_clip_down(70, 455, 57, 80);
@@ -220,6 +216,25 @@ bool MENU::Load_All_Button_And_Background_Display(SDL_Renderer* screen)
 		next_button.set_in_use_button(false);
 	}
 
+	if (!rank_button.load_button(screen, "GAME_TEXTURE/GAME_MENU_BUTTON/rank_button.png", true, 255, 255, 255))
+	{
+		cout << "fail to load open rank table button\n";
+		return false;
+	}
+	else
+	{
+		rank_button.Set_Display_Width(40);
+		rank_button.Set_Display_Height(40);
+		rank_button.set_button_rect(SCREEN_WIDTH - 260, SCREEN_HEIGHT - 70, 40, 40);
+		rank_button.set_button_clip_out(32, 35, 138, 138);
+		rank_button.set_button_clip_over(32, 235, 138, 138);
+		rank_button.set_button_clip_down(32, 435, 138, 138);
+		rank_button.set_button_clip_up(32, 235, 138, 138);
+		rank_button.set_in_use_button(true);
+	}
+
+
+
 	// load background
 
 	if (!start_screen_background.load_texture_from_file("GAME_TEXTURE/BACKGROUND/start_screen.png", screen))
@@ -233,7 +248,7 @@ bool MENU::Load_All_Button_And_Background_Display(SDL_Renderer* screen)
 		cout << "fail to load after lose background\n";
 		return false;
 	}
-	
+
 	if (!screen_after_win_background.load_texture_from_file("GAME_TEXTURE/BACKGROUND/screen_after_win.png", screen))
 	{
 		cout << "fail to load after win background\n";
@@ -255,6 +270,12 @@ bool MENU::Load_All_Button_And_Background_Display(SDL_Renderer* screen)
 	if (!see_result_game_background.load_texture_from_file("GAME_TEXTURE/BACKGROUND/results_background.png", screen))
 	{
 		cout << "Error load back ground: fail to load results back ground\n";
+		return false;
+	}
+
+	if (!ranking_screen_background.load_texture_from_file("GAME_TEXTURE/BACKGROUND/ranking_background.png", screen))
+	{
+		cout << "Error loading background: fail to load ranking display background\n";
 		return false;
 	}
 	return true;
@@ -335,6 +356,7 @@ void MENU::Handle_All_Button(SDL_Event& e, bool& quit)
 	turn_on_help_screen_button.handle_button(e);
 	exit_help_screen_button.handle_button(e);
 	next_button.handle_button(e);
+	rank_button.handle_button(e);
 
 	if (start_play_button.get_is_button_click())
 	{
@@ -462,6 +484,26 @@ void MENU::Handle_All_Button(SDL_Event& e, bool& quit)
 
 		Mix_PlayChannel(-1, Click_Button, 0);
 	}
+	else if (rank_button.get_is_button_click())
+	{
+		rank_button.set_is_button_click(false);
+		if (Screen_Status == START_SCREEN)
+		{
+			Screen_Status = OPEN_RANK_TABLE;
+			Set_Open_Ranking_Screen();
+
+			rank_button.set_button_rect(SCREEN_WIDTH - 65, SCREEN_HEIGHT - 70, 40, 40);
+		}
+		else if (Screen_Status == OPEN_RANK_TABLE)
+		{
+			Screen_Status = START_SCREEN;
+			Set_Start_Screen();
+
+			rank_button.set_button_rect(SCREEN_WIDTH - 260, SCREEN_HEIGHT - 70, 40, 40);
+		}
+
+		Mix_PlayChannel(-1, Click_Button, 0);
+	}
 }
 
 void MENU::Render_Menu_Button(SDL_Renderer* screen)
@@ -477,6 +519,7 @@ void MENU::Render_Menu_Button(SDL_Renderer* screen)
 	turn_on_help_screen_button.render_button(screen);
 	exit_help_screen_button.render_button(screen);
 	next_button.render_button(screen);
+	rank_button.render_button(screen);
 }
 
 void MENU::Render_Background(SDL_Renderer* screen)
@@ -532,6 +575,12 @@ void MENU::Render_Background(SDL_Renderer* screen)
 		display_playing_time.render_texture_on_screen(300, 250, screen);
 		display_end_game_status.render_texture_on_screen(300, 350, screen);
 	}
+	else if (Screen_Status == OPEN_RANK_TABLE)
+	{
+		ranking_screen_background.render_texture_on_screen(0, 0, screen);
+
+
+	}
 	else return;
 }
 
@@ -548,6 +597,7 @@ void MENU::Set_Start_Screen()
 	turn_on_help_screen_button.set_in_use_button(true);
 	exit_help_screen_button.set_in_use_button(false);
 	next_button.set_in_use_button(false);
+	rank_button.set_in_use_button(true);
 }
 
 void MENU::Set_PLaying_Screen()
@@ -563,6 +613,7 @@ void MENU::Set_PLaying_Screen()
 	turn_on_help_screen_button.set_in_use_button(false);
 	exit_help_screen_button.set_in_use_button(false);
 	next_button.set_in_use_button(false);
+	rank_button.set_in_use_button(false);
 }
 
 void MENU::Set_Pause_Screen()
@@ -578,6 +629,7 @@ void MENU::Set_Pause_Screen()
 	turn_on_help_screen_button.set_in_use_button(false);
 	exit_help_screen_button.set_in_use_button(false);
 	next_button.set_in_use_button(false);
+	rank_button.set_in_use_button(false);
 }
 
 void MENU::Set_Screen_After_Lose()
@@ -593,6 +645,7 @@ void MENU::Set_Screen_After_Lose()
 	turn_on_help_screen_button.set_in_use_button(false);
 	exit_help_screen_button.set_in_use_button(false);
 	next_button.set_in_use_button(false);
+	rank_button.set_in_use_button(false);
 }
 
 void MENU::Set_Screen_After_Win()
@@ -608,6 +661,7 @@ void MENU::Set_Screen_After_Win()
 	turn_on_help_screen_button.set_in_use_button(false);
 	exit_help_screen_button.set_in_use_button(false);
 	next_button.set_in_use_button(false);
+	rank_button.set_in_use_button(false);
 }
 
 void MENU::Set_Help_Screen()
@@ -623,6 +677,7 @@ void MENU::Set_Help_Screen()
 	turn_on_help_screen_button.set_in_use_button(false);
 	exit_help_screen_button.set_in_use_button(true);
 	next_button.set_in_use_button(false);
+	rank_button.set_in_use_button(false);
 }
 
 void MENU::Set_Results_Screen()
@@ -638,6 +693,23 @@ void MENU::Set_Results_Screen()
 	turn_on_help_screen_button.set_in_use_button(false);
 	exit_help_screen_button.set_in_use_button(false);
 	next_button.set_in_use_button(true);
+	rank_button.set_in_use_button(false);
+}
+
+void MENU::Set_Open_Ranking_Screen()
+{
+	start_play_button.set_in_use_button(false);
+	quit_button.set_in_use_button(false);
+	turn_on_off_sound_button.set_in_use_button(false);
+	mini_menu_button.set_in_use_button(false);
+	continue_button.set_in_use_button(false);
+	back_to_start_button.set_in_use_button(false);
+	yes_button.set_in_use_button(false);
+	no_button.set_in_use_button(false);
+	turn_on_help_screen_button.set_in_use_button(false);
+	exit_help_screen_button.set_in_use_button(false);
+	next_button.set_in_use_button(false);
+	rank_button.set_in_use_button(true);
 }
 
 void MENU::Set_Play_Time()
@@ -658,4 +730,109 @@ void MENU::Set_Play_Time()
 	time_play_text << setfill('0') << setw(2) << right << hour << ":";
 	time_play_text << setfill('0') << setw(2) << right << minute<< ":";
 	time_play_text << setfill('0') << setw(2) << right << second;
+
+	Set_Fastest_Game_Completion_Time(total_time_play);
+}
+
+void MENU::Set_Fastest_Game_Completion_Time(const int& playtime)
+{
+	vector<int> playing_time_list_in_second_unit;
+	
+	ifstream file;
+	
+	// open file saving infomation of to 5 clear game fastest
+	file.open("GAME_RESULTS/top5.txt", ios::in);
+
+	// get data from file
+	string s;
+	for (int i = 0; i < 5; ++i)
+	{
+		// check file have any thing to read or not
+		if (!file)
+		{
+			if (getline(file, s))
+			{
+				// change format hh:mm:ss to second
+				stringstream ss;
+				ss.str("");
+				ss << s;
+
+				int hour, minute, second;
+				char ch;
+
+				ss >> hour >> ch >> minute >> ch >> second;
+				second += (minute * 60 + hour * 3600);
+
+				// push playing time in second unit to list 
+				playing_time_list_in_second_unit.push_back(second);
+			}
+			else
+			{
+				break;
+			}
+		}
+		else
+		{
+			// can read from file anymore then break loop
+			break;
+		}
+	}
+
+	file.close();
+
+	// check list are empty or not
+	if (playing_time_list_in_second_unit.empty())
+	{
+		// it empty then push new value
+		playing_time_list_in_second_unit.push_back(playtime);
+	}
+	else if (playing_time_list_in_second_unit.size() >= 1 && playing_time_list_in_second_unit.size() < 5)
+	{
+		// if have more than 1 and less than 5 value in list
+		// push new value in list and sort the list ascending
+		playing_time_list_in_second_unit.push_back(playtime);
+		sort(playing_time_list_in_second_unit.begin(), playing_time_list_in_second_unit.end(), less<int>());
+	}
+	else if (playing_time_list_in_second_unit.size() >= 5)
+	{
+		// if have more thanh 5 value in list
+		// push new value in list and sort the list ascending
+		playing_time_list_in_second_unit.push_back(playtime);
+		sort(playing_time_list_in_second_unit.begin(), playing_time_list_in_second_unit.end(), less<int>());
+
+		// delete the biggest value
+		playing_time_list_in_second_unit.erase(playing_time_list_in_second_unit.begin() + playing_time_list_in_second_unit.size() - 1);
+	}
+	
+
+
+	// write new data to the file 
+	ofstream FILE;
+
+	// open file to write
+	FILE.open("GAME_RESULTS/top5.txt", ios::out);
+
+
+	for (int i = 0; i < playing_time_list_in_second_unit.size(); ++i)
+	{
+		// change second to format hh:mm:ss
+		stringstream tmp;
+		tmp.str();
+
+		int hour, minute, second;
+		hour = playing_time_list_in_second_unit[i] / 3600;
+		second = playing_time_list_in_second_unit[i] % 3600;
+		minute = second / 60;
+		second %= 60;
+
+		tmp << setfill('0') << setw(2) << right << hour << ":";
+		tmp << setfill('0') << setw(2) << right << minute << ":";
+		tmp << setfill('0') << setw(2) << right << second;
+
+		// after change time format then push it into file
+		FILE << tmp.str() << endl;
+	}
+
+	// close write file work
+	FILE.close();
 }

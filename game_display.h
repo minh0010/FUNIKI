@@ -15,7 +15,8 @@ enum STATUS
 	SCREEN_AFTER_LOSE = 40,
 	SCREEN_AFTER_WIN = 50,
 	HELP_SCREEN = 60,
-	RESULTS_SCREEN = 70
+	RESULTS_SCREEN = 70,
+	OPEN_RANK_TABLE = 80
 };
 
 class MENU
@@ -56,6 +57,7 @@ public:
 
 	void Set_Results_Screen();
 
+	void Set_Open_Ranking_Screen();
 
 	void Set_Screen_Status(const int& val) { Screen_Status = val; }
 
@@ -66,6 +68,8 @@ public:
 	void Set_Start_Time() { start_time = SDL_GetTicks(); }
 
 	void Set_Play_Time();
+
+	void Set_Fastest_Game_Completion_Time(const int &playtime);
 
 	bool Get_Request_A_Reload() const { return request_a_reload; }
 
@@ -84,6 +88,7 @@ private:
 	BUTTON turn_on_help_screen_button;
 	BUTTON exit_help_screen_button;
 	BUTTON next_button;
+	BUTTON rank_button;
 
 	// bacl ground display base on current screen
 
@@ -93,6 +98,7 @@ private:
 	TEXTURE help_screen_background;
 	TEXTURE pause_screen_background;
 	TEXTURE see_result_game_background;
+	TEXTURE ranking_screen_background;
 
 	// sound effect and music
 
