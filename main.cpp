@@ -355,15 +355,19 @@ void play_game()
 
 				if (player_in_win_area(main_Reaper.Get_Reaper_Collision_Box()))
 				{
-					FUNIKI_MENU.Set_Screen_Status(SCREEN_AFTER_WIN);
-					FUNIKI_MENU.Set_Screen_After_Win();
+					FUNIKI_MENU.Set_Play_Time();
+					FUNIKI_MENU.Set_Player_Win(true);
+					FUNIKI_MENU.Set_Screen_Status(RESULTS_SCREEN);
+					FUNIKI_MENU.Set_Results_Screen();
 					FUNIKI_MENU.Set_Request_A_Reload(true);
 				}
 			}
 			else
 			{
-				FUNIKI_MENU.Set_Screen_Status(SCREEN_AFTER_LOSE);
-				FUNIKI_MENU.Set_Screen_After_Lose();
+				FUNIKI_MENU.Set_Play_Time();
+				FUNIKI_MENU.Set_Player_Win(false);
+				FUNIKI_MENU.Set_Screen_Status(RESULTS_SCREEN);
+				FUNIKI_MENU.Set_Results_Screen();
 				FUNIKI_MENU.Set_Request_A_Reload(true);
 			}
 		}

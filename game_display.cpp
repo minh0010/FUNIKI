@@ -1,3 +1,5 @@
+#include <iomanip>
+
 #include "game_display.h"
 
 MENU::MENU()
@@ -10,6 +12,11 @@ MENU::MENU()
 	Soundtrack_Playing = NULL;
 	Soundtrack_Start_Game = NULL;
 	Click_Button = NULL;
+
+	player_win = false;
+	start_time = (Uint32)0;
+	time_play_text.str("");
+	end_game_status_text.str("");
 }
 
 MENU::~MENU()
@@ -25,7 +32,6 @@ MENU::~MENU()
 
 bool MENU::Load_All_Button_And_Background_Display(SDL_Renderer* screen)
 {
-
 	// load menu button
 	if (!start_play_button.load_button(screen, "GAME_TEXTURE/GAME_MENU_BUTTON/play_button.png", true, 0, 0, 0))
 	{
@@ -197,6 +203,23 @@ bool MENU::Load_All_Button_And_Background_Display(SDL_Renderer* screen)
 		exit_help_screen_button.set_in_use_button(false);
 	}
 
+	if (!next_button.load_button(screen, "GAME_TEXTURE/GAME_MENU_BUTTON/next_button.png", true, 0, 0, 0))
+	{
+		cout << "fail to load exit help screen button\n";
+		return false;
+	}
+	else
+	{
+		next_button.Set_Display_Width(150);
+		next_button.Set_Display_Height(50);
+		next_button.set_button_rect((SCREEN_WIDTH - 150) / 2, (SCREEN_HEIGHT - 50) * 3 / 4, 150, 50);
+		next_button.set_button_clip_out(185, 55, 220, 75);
+		next_button.set_button_clip_over(185, 255, 220, 75);
+		next_button.set_button_clip_down(185, 455, 220, 75);
+		next_button.set_button_clip_up(185, 255, 220, 75);
+		next_button.set_in_use_button(false);
+	}
+
 	// load background
 
 	if (!start_screen_background.load_texture_from_file("GAME_TEXTURE/BACKGROUND/start_screen.png", screen))
@@ -204,11 +227,13 @@ bool MENU::Load_All_Button_And_Background_Display(SDL_Renderer* screen)
 		cout << "fail to load start screen background\n";
 		return false;
 	}
+
 	if (!screen_after_lose_background.load_texture_from_file("GAME_TEXTURE/BACKGROUND/screen_after_lose.png", screen))
 	{
 		cout << "fail to load after lose background\n";
 		return false;
 	}
+	
 	if (!screen_after_win_background.load_texture_from_file("GAME_TEXTURE/BACKGROUND/screen_after_win.png", screen))
 	{
 		cout << "fail to load after win background\n";
@@ -227,6 +252,11 @@ bool MENU::Load_All_Button_And_Background_Display(SDL_Renderer* screen)
 		return false;
 	}
 
+	if (!see_result_game_background.load_texture_from_file("GAME_TEXTURE/BACKGROUND/results_background.png", screen))
+	{
+		cout << "Error load back ground: fail to load results back ground\n";
+		return false;
+	}
 	return true;
 }
 
@@ -304,9 +334,12 @@ void MENU::Handle_All_Button(SDL_Event& e, bool& quit)
 	turn_on_off_sound_button.handle_button(e);
 	turn_on_help_screen_button.handle_button(e);
 	exit_help_screen_button.handle_button(e);
+	next_button.handle_button(e);
 
 	if (start_play_button.get_is_button_click())
 	{
+		Set_Start_Time();
+
 		start_play_button.set_is_button_click(false);
 		Screen_Status = PLAY_SCREEN;
 		request_a_reload = true;
@@ -350,6 +383,8 @@ void MENU::Handle_All_Button(SDL_Event& e, bool& quit)
 	}
 	else if (yes_button.get_is_button_click())
 	{
+		Set_Start_Time();
+
 		yes_button.set_is_button_click(false);
 		Screen_Status = PLAY_SCREEN;
 		request_a_reload = true;
@@ -407,6 +442,26 @@ void MENU::Handle_All_Button(SDL_Event& e, bool& quit)
 
 		Mix_PlayChannel(-1, Click_Button, 0);
 	}
+	else if (next_button.get_is_button_click())
+	{
+		next_button.set_is_button_click(false);
+		if (player_win)
+		{
+			end_game_status_text.str("");
+			end_game_status_text << "Status: WIN";
+			Screen_Status = SCREEN_AFTER_WIN;
+			Set_Screen_After_Win();
+		}
+		else
+		{
+			end_game_status_text.str("");
+			end_game_status_text << "Status: LOSE";
+			Screen_Status = SCREEN_AFTER_LOSE;
+			Set_Screen_After_Lose();
+		}
+
+		Mix_PlayChannel(-1, Click_Button, 0);
+	}
 }
 
 void MENU::Render_Menu_Button(SDL_Renderer* screen)
@@ -421,6 +476,7 @@ void MENU::Render_Menu_Button(SDL_Renderer* screen)
 	turn_on_off_sound_button.render_button(screen);
 	turn_on_help_screen_button.render_button(screen);
 	exit_help_screen_button.render_button(screen);
+	next_button.render_button(screen);
 }
 
 void MENU::Render_Background(SDL_Renderer* screen)
@@ -445,6 +501,37 @@ void MENU::Render_Background(SDL_Renderer* screen)
 	{
 		pause_screen_background.render_texture_on_screen(0, 0, screen);
 	}
+	else if (Screen_Status == RESULTS_SCREEN)
+	{
+		see_result_game_background.render_texture_on_screen(0, 0, screen);
+
+		if (!display_playing_time.loadFromRenderedText(time_play_text.str().c_str(), FONT_COLOR, screen))
+		{
+			cout << "fail to load player time\n";
+			return;
+		}
+
+
+		if (player_win)
+		{
+			end_game_status_text.str("");
+			end_game_status_text << "Status: WIN";
+		}
+		else
+		{
+			end_game_status_text.str("");
+			end_game_status_text << "Status: LOSE";
+		}
+
+		if (!display_end_game_status.loadFromRenderedText(end_game_status_text.str().c_str(), FONT_COLOR, screen))
+		{
+			cout << "fail to load end game status\n";
+			return;
+		}
+
+		display_playing_time.render_texture_on_screen(300, 250, screen);
+		display_end_game_status.render_texture_on_screen(300, 350, screen);
+	}
 	else return;
 }
 
@@ -460,6 +547,7 @@ void MENU::Set_Start_Screen()
 	no_button.set_in_use_button(false);
 	turn_on_help_screen_button.set_in_use_button(true);
 	exit_help_screen_button.set_in_use_button(false);
+	next_button.set_in_use_button(false);
 }
 
 void MENU::Set_PLaying_Screen()
@@ -474,6 +562,7 @@ void MENU::Set_PLaying_Screen()
 	no_button.set_in_use_button(false);
 	turn_on_help_screen_button.set_in_use_button(false);
 	exit_help_screen_button.set_in_use_button(false);
+	next_button.set_in_use_button(false);
 }
 
 void MENU::Set_Pause_Screen()
@@ -488,6 +577,7 @@ void MENU::Set_Pause_Screen()
 	no_button.set_in_use_button(false);
 	turn_on_help_screen_button.set_in_use_button(false);
 	exit_help_screen_button.set_in_use_button(false);
+	next_button.set_in_use_button(false);
 }
 
 void MENU::Set_Screen_After_Lose()
@@ -502,6 +592,7 @@ void MENU::Set_Screen_After_Lose()
 	no_button.set_in_use_button(true);
 	turn_on_help_screen_button.set_in_use_button(false);
 	exit_help_screen_button.set_in_use_button(false);
+	next_button.set_in_use_button(false);
 }
 
 void MENU::Set_Screen_After_Win()
@@ -516,6 +607,7 @@ void MENU::Set_Screen_After_Win()
 	no_button.set_in_use_button(true);
 	turn_on_help_screen_button.set_in_use_button(false);
 	exit_help_screen_button.set_in_use_button(false);
+	next_button.set_in_use_button(false);
 }
 
 void MENU::Set_Help_Screen()
@@ -530,4 +622,40 @@ void MENU::Set_Help_Screen()
 	no_button.set_in_use_button(false);
 	turn_on_help_screen_button.set_in_use_button(false);
 	exit_help_screen_button.set_in_use_button(true);
+	next_button.set_in_use_button(false);
+}
+
+void MENU::Set_Results_Screen()
+{
+	start_play_button.set_in_use_button(false);
+	quit_button.set_in_use_button(false);
+	turn_on_off_sound_button.set_in_use_button(false);
+	mini_menu_button.set_in_use_button(false);
+	continue_button.set_in_use_button(false);
+	back_to_start_button.set_in_use_button(false);
+	yes_button.set_in_use_button(false);
+	no_button.set_in_use_button(false);
+	turn_on_help_screen_button.set_in_use_button(false);
+	exit_help_screen_button.set_in_use_button(false);
+	next_button.set_in_use_button(true);
+}
+
+void MENU::Set_Play_Time()
+{
+	time_play_text.str("");
+	time_play_text << "Your playing time: ";
+
+	// time play in second unit
+	int total_time_play = (SDL_GetTicks() - start_time) / 1000;
+
+	// change second to format hh:mm:ss
+	int hour, minute, second;
+	hour = total_time_play / 3600;
+	second = total_time_play % 3600;
+	minute = second / 60;
+	second %= 60;
+
+	time_play_text << setfill('0') << setw(2) << right << hour << ":";
+	time_play_text << setfill('0') << setw(2) << right << minute<< ":";
+	time_play_text << setfill('0') << setw(2) << right << second;
 }

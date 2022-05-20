@@ -14,7 +14,8 @@ enum STATUS
 	PAUSE_SCREEN = 30,
 	SCREEN_AFTER_LOSE = 40,
 	SCREEN_AFTER_WIN = 50,
-	HELP_SCREEN = 60
+	HELP_SCREEN = 60,
+	RESULTS_SCREEN = 70
 };
 
 class MENU
@@ -53,10 +54,18 @@ public:
 
 	void Set_Help_Screen();
 
+	void Set_Results_Screen();
+
+
 	void Set_Screen_Status(const int& val) { Screen_Status = val; }
 
 	void Set_Request_A_Reload(const bool& val) { request_a_reload = val; }
 
+	void Set_Player_Win(const bool& val) { player_win = val; }
+
+	void Set_Start_Time() { start_time = SDL_GetTicks(); }
+
+	void Set_Play_Time();
 
 	bool Get_Request_A_Reload() const { return request_a_reload; }
 
@@ -74,6 +83,7 @@ private:
 	BUTTON turn_on_off_sound_button;
 	BUTTON turn_on_help_screen_button;
 	BUTTON exit_help_screen_button;
+	BUTTON next_button;
 
 	// bacl ground display base on current screen
 
@@ -82,6 +92,7 @@ private:
 	TEXTURE screen_after_win_background;
 	TEXTURE help_screen_background;
 	TEXTURE pause_screen_background;
+	TEXTURE see_result_game_background;
 
 	// sound effect and music
 
@@ -93,6 +104,15 @@ private:
 	int Screen_Status;
 	bool change_music;
 	bool turn_off_sound;
+
+	bool player_win;
+
+	Uint32 start_time;
+	stringstream time_play_text;
+	stringstream end_game_status_text;
+
+	TEXTURE display_playing_time;
+	TEXTURE display_end_game_status;
 };
 
 static MENU FUNIKI_MENU;
