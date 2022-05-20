@@ -78,7 +78,7 @@ bool MENU::Load_All_Button_And_Background_Display(SDL_Renderer* screen)
 		mini_menu_button.set_in_use_button(false);
 	}
 
-	if (!continue_button.load_button(screen, "GAME_TEXTURE/GAME_MENU_BUTTON/continue_button.png", true, 255, 255, 255))
+	if (!continue_button.load_button(screen, "GAME_TEXTURE/GAME_MENU_BUTTON/continue_button.png", true, 0, 0, 0))
 	{
 		cout << "fail to load button texture\n";
 		return false;
@@ -88,10 +88,10 @@ bool MENU::Load_All_Button_And_Background_Display(SDL_Renderer* screen)
 		continue_button.Set_Display_Width(350);
 		continue_button.Set_Display_Height(70);
 		continue_button.set_button_rect(450, (SCREEN_HEIGHT / 2 - 120), 350, 70);
-		continue_button.set_button_clip_out(60, 50, 466, 90);
-		continue_button.set_button_clip_over(60, 250, 466, 90);
-		continue_button.set_button_clip_down(60, 450, 466, 90);
-		continue_button.set_button_clip_up(60, 250, 466, 90);
+		continue_button.set_button_clip_out(95, 60, 400, 75);
+		continue_button.set_button_clip_over(95, 260, 400, 75);
+		continue_button.set_button_clip_down(95, 460, 400, 75);
+		continue_button.set_button_clip_up(95, 260, 400, 75);
 		continue_button.set_in_use_button(false);
 	}
 
