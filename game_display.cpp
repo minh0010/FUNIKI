@@ -112,7 +112,7 @@ bool MENU::Load_All_Button_And_Background_Display(SDL_Renderer* screen)
 		back_to_start_button.set_in_use_button(false);
 	}
 
-	if (!yes_button.load_button(screen, "GAME_TEXTURE/GAME_MENU_BUTTON/yes_button.png", true, 255, 255, 255))
+	if (!yes_button.load_button(screen, "GAME_TEXTURE/GAME_MENU_BUTTON/yes_button.png", true, 0, 0, 0))
 	{
 		cout << "error with load menu: fail to load yes button\n";
 		return false;
@@ -122,14 +122,14 @@ bool MENU::Load_All_Button_And_Background_Display(SDL_Renderer* screen)
 		yes_button.Set_Display_Width(150);
 		yes_button.Set_Display_Height(75);
 		yes_button.set_button_rect(SCREEN_WIDTH / 2 - 200, SCREEN_HEIGHT - 200, 150, 75);
-		yes_button.set_button_clip_out(205, 50, 180, 96);
-		yes_button.set_button_clip_over(205, 250, 180, 96);
-		yes_button.set_button_clip_down(205, 450, 180, 96);
-		yes_button.set_button_clip_up(205, 250, 180, 96);
+		yes_button.set_button_clip_out(210, 60, 162, 75);
+		yes_button.set_button_clip_over(210, 260, 162, 75);
+		yes_button.set_button_clip_down(210, 460, 162, 75);
+		yes_button.set_button_clip_up(210, 260, 162, 75);
 		yes_button.set_in_use_button(false);
 	}
 
-	if (!no_button.load_button(screen, "GAME_TEXTURE/GAME_MENU_BUTTON/no_button.png", true, 255, 255, 255))
+	if (!no_button.load_button(screen, "GAME_TEXTURE/GAME_MENU_BUTTON/no_button.png", true, 0, 0, 0))
 	{
 		cout << "fail to load no button\n";
 		return false;
@@ -139,10 +139,10 @@ bool MENU::Load_All_Button_And_Background_Display(SDL_Renderer* screen)
 		no_button.Set_Display_Width(150);
 		no_button.Set_Display_Height(75);
 		no_button.set_button_rect(SCREEN_WIDTH / 2 + 20, SCREEN_HEIGHT - 200, 150, 75);
-		no_button.set_button_clip_out(222, 50, 151, 92);
-		no_button.set_button_clip_over(222, 250, 151, 92);
-		no_button.set_button_clip_down(222, 450, 151, 92);
-		no_button.set_button_clip_up(222, 250, 151, 92);
+		no_button.set_button_clip_out(245, 55, 124, 74);
+		no_button.set_button_clip_over(245, 255, 124, 74);
+		no_button.set_button_clip_down(245, 455, 124, 74);
+		no_button.set_button_clip_up(245, 255, 124, 74);
 		no_button.set_in_use_button(false);
 	}
 
