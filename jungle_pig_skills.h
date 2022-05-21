@@ -10,9 +10,7 @@
 
 const int BOSS_BULLET_DISPLAY_WIDTH = 60;
 const int BOSS_BULLET_DISPLAY_HEIGHT = 60;
-
-
-const int BOSS_BULLET_DAMAGE = 10;
+const int BOSS_BULLET_DAMAGE = 20;
 static TEXTURE boss_bullet_texture;
 
 class BOSS_BULLET
@@ -80,23 +78,37 @@ public:
 	~METEO();
 
 	void Set_Boss_Meteo_Positon(const int& x, const int& y) { METEO_POS.x = x; METEO_POS.y = y; }
+
 	void Set_Is_Boss_Meteo_Falling(const bool& val) { Is_Boss_Meteo_Falling = val; }
+
 	void Set_Boss_Limit(const int& val) { Limit = val; }
+
 	void Set_Is_Create_Lava_Pool(const bool& val) { Is_Create_Lava_Pool = val; }
+
 	void Set_Lava_Position(const int& x, const int& y) { LAVA_POS.x = x; LAVA_POS.y = y; }
+
 	void Set_red_x(const int& x, const int& y) { red_x_pos.x = x; red_x_pos.y = y; }
+
 	void Set_Lava_Center() { lava_center_x = LAVA_POS.x + LAVA_SIZE / 2; lava_center_y = LAVA_POS.y + 20; }
 
 	int Get_Boss_Bullet_x() const { return METEO_POS.x; }
+
 	int Get_Boss_Bullet_y() const { return METEO_POS.y; }
+
 	bool Get_Is_Boss_Bullet_Falling() const { return Is_Boss_Meteo_Falling; }
+
 	bool Get_Is_Create_Lava_Pool()  const { return Is_Create_Lava_Pool; }
+
 	int Get_Lava_Center_x() const { return lava_center_x; }
+
 	int Get_Lava_Center_y() const { return lava_center_y; }
 
 	void delay_lava_pool();
+
 	void handle_meteo();
+
 	void render_meteo(SDL_Renderer* screen, SDL_Rect& camera);
+
 	void render_meteo_falling_position(SDL_Renderer* screen, SDL_Rect& camera);
 
 	bool delay_damage();

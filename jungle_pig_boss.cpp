@@ -43,6 +43,8 @@ bool JUNGLEPIG::Load_Jungle_Pig_Texture(SDL_Renderer* screen)
 		TEXTURE::Set_Display_Width(JUNGLE_PIG_WIDTH);
 		Set_Jungle_Pig_Frame();
 		Set_Jungle_Pig_Start_Position(950, 450);
+		new_position_x = 950;
+		new_position_y = 450;
 	}
 
 	if (!Jungle_Pig_Blood.Load_Blood_Texture("GAME_TEXTURE/BLOOD/Jungle_Pig_Blood_Bar.png", screen))
@@ -65,50 +67,47 @@ bool JUNGLEPIG::Load_Jungle_Pig_Texture(SDL_Renderer* screen)
 
 void JUNGLEPIG::Handle_Boss_Move()
 {
-	if (is_jungle_pig_move)
+	if (new_position_x > Jungle_Pig_Rect.x)
 	{
-		if (new_position_x > Jungle_Pig_Rect.x)
+		Jungle_Pig_Rect.x += JUNGLE_PIG_MOVE_SPEED;
+		Jungle_Pig_Collision_Box.x = Jungle_Pig_Rect.x + 58;
+		if (Jungle_Pig_Rect.x > new_position_x)
 		{
-			Jungle_Pig_Rect.x += JUNGLE_PIG_MOVE_SPEED;
+			Jungle_Pig_Rect.x = new_position_x;
 			Jungle_Pig_Collision_Box.x = Jungle_Pig_Rect.x + 58;
-			if (Jungle_Pig_Rect.x > new_position_x)
-			{
-				Jungle_Pig_Rect.x = new_position_x;
-				Jungle_Pig_Collision_Box.x = Jungle_Pig_Rect.x + 58;
-			}
 		}
+	}
 
-		if (new_position_x < Jungle_Pig_Rect.x)
+	if (new_position_x < Jungle_Pig_Rect.x)
+	{
+		Jungle_Pig_Rect.x -= JUNGLE_PIG_MOVE_SPEED;
+		Jungle_Pig_Collision_Box.x = Jungle_Pig_Rect.x + 58;
+		if (Jungle_Pig_Rect.x < new_position_x)
 		{
-			Jungle_Pig_Rect.x -= JUNGLE_PIG_MOVE_SPEED;
+			Jungle_Pig_Rect.x = new_position_x;
 			Jungle_Pig_Collision_Box.x = Jungle_Pig_Rect.x + 58;
-			if (Jungle_Pig_Rect.x < new_position_x)
-			{
-				Jungle_Pig_Rect.x = new_position_x;
-				Jungle_Pig_Collision_Box.x = Jungle_Pig_Rect.x + 58;
-			}
 		}
+	}
 
-		if (new_position_y > Jungle_Pig_Rect.y)
+	if (new_position_y > Jungle_Pig_Rect.y)
+	{
+		Jungle_Pig_Rect.y += JUNGLE_PIG_MOVE_SPEED;
+		Jungle_Pig_Collision_Box.y = Jungle_Pig_Rect.y + 100;
+		if (Jungle_Pig_Rect.y > new_position_y)
 		{
-			Jungle_Pig_Rect.y += JUNGLE_PIG_MOVE_SPEED;
+			Jungle_Pig_Rect.y = new_position_y;
 			Jungle_Pig_Collision_Box.y = Jungle_Pig_Rect.y + 100;
-			if (Jungle_Pig_Rect.y > new_position_y)
-			{
-				Jungle_Pig_Rect.y = new_position_y;
-				Jungle_Pig_Collision_Box.y = Jungle_Pig_Rect.y + 100;
-			}
 		}
+	}
 
-		if (new_position_y < Jungle_Pig_Rect.y)
+	if (new_position_y < Jungle_Pig_Rect.y)
+	{
+		Jungle_Pig_Rect.y -= JUNGLE_PIG_MOVE_SPEED;
+		Jungle_Pig_Collision_Box.y = Jungle_Pig_Rect.y + 100;
+		if (Jungle_Pig_Rect.y < new_position_y)
 		{
-			Jungle_Pig_Rect.y -= JUNGLE_PIG_MOVE_SPEED;
+			Jungle_Pig_Rect.y = new_position_y;
 			Jungle_Pig_Collision_Box.y = Jungle_Pig_Rect.y + 100;
-			if (Jungle_Pig_Rect.y < new_position_y)
-			{
-				Jungle_Pig_Rect.y = new_position_y;
-				Jungle_Pig_Collision_Box.y = Jungle_Pig_Rect.y + 100;
-			}
 		}
 	}
 
@@ -362,7 +361,7 @@ void JUNGLEPIG::Handle_Skills(SDL_Renderer* screen, TILE* tiles[], SDL_Rect& cam
 
 void JUNGLEPIG::Handle_Life(vector<BULLET*> list)
 {
-	if (list.size() >= 1)
+	if (!list.empty())
 	{
 		for (int i = 0; i < list.size(); ++i)
 		{
@@ -374,6 +373,7 @@ void JUNGLEPIG::Handle_Life(vector<BULLET*> list)
 			if (Jungle_Pig_Blood.Get_Current_Blood() <= 0) Set_Is_Alive(false);
 		}
 	}
+
 	if (Jungle_Pig_Blood.Get_Current_Blood() > JUNGLE_PIG_TOTAL_BLOOD * 2 / 3) BOSS_MODE = EASY;
 	else if (Jungle_Pig_Blood.Get_Current_Blood() <= JUNGLE_PIG_TOTAL_BLOOD * 2 / 3) BOSS_MODE = MEDIUM;
 	else if (Jungle_Pig_Blood.Get_Current_Blood() <= JUNGLE_PIG_TOTAL_BLOOD / 3) BOSS_MODE = HARD;
@@ -424,6 +424,9 @@ void JUNGLEPIG::Reset_From_Start()
 	Jungle_Pig_Collision_Box = { 0,0,145,90 };
 
 	Set_Jungle_Pig_Start_Position(950, 450);
+	new_position_x = 950;
+	new_position_y = 450;
+
 	Jungle_Pig_Blood.Reset_Blood();
 
 	is_jungle_pig_move = false;

@@ -103,6 +103,8 @@ public:
 	vector<METEO*> Get_Meteo_List() const { return meteo_list; }
 
 	void Reset_From_Start();
+
+
 private:
 	SDL_Rect Jungle_Pig_Rect, Jungle_Pig_Collision_Box;
 	int frame;

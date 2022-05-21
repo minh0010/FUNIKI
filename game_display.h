@@ -32,7 +32,6 @@ public:
 	bool load_sound_effect_and_music();
 
 
-
 	void Handle_All_Button(SDL_Event& e, bool& quit);
 
 	void Handle_sound();
@@ -40,7 +39,6 @@ public:
 	void Render_Menu_Button(SDL_Renderer* screen);
 
 	void Render_Background(SDL_Renderer* screen);
-
 
 
 	void Set_Start_Screen();

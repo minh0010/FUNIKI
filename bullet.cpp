@@ -23,7 +23,6 @@ void BULLET::Handle_Bullet(TILE* tiles[])
 
 	if (touch_wall(Bullet_Rect, tiles))
 	{
-
 		Is_Bullet_Move = false;
 	}
 }

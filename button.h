@@ -6,6 +6,7 @@ class BUTTON :public TEXTURE
 {
 public:
 	const int total_button_clip = 4;
+
 	enum mouse_status
 	{
 		mouse_out = 0,
@@ -13,14 +14,20 @@ public:
 		mouse_down = 2,
 		mouse_up = 3
 	};
+
 	BUTTON();
+
 	~BUTTON();
+
 	void set_in_use_button(const bool& val) { in_use_button = val; }
+
 	void set_is_button_click(const bool& val) { is_button_click = val; }
+
 	void set_button_rect(const int& x, const int& y, const int& w, const int& h)
 	{
 		button_rect.x = x; button_rect.y = y; button_rect.h = h; button_rect.w = w;
 	}
+
 	void set_button_clip_out(const int& x, const int& y, const int& w, const int& h)
 	{
 		button_clip[mouse_out].x = x;

@@ -579,7 +579,43 @@ void MENU::Render_Background(SDL_Renderer* screen)
 	{
 		ranking_screen_background.render_texture_on_screen(0, 0, screen);
 
+		ifstream file;
 
+		// open file saving infomation of to 5 clear game fastest
+		file.open("GAME_RESULTS/top5.txt");
+
+		// get data from file
+		string s;
+		for (int i = 0; i < 5; ++i)
+		{
+			// check file have any thing to read or not
+			TEXTURE display_texture;
+			stringstream display_text;
+			display_text.str("");
+			if (getline(file, s))
+			{
+				display_text << "Top " << i + 1 << ": " << s;
+				if (!display_texture.loadFromRenderedText(display_text.str().c_str(), FONT_COLOR, screen))
+				{
+					cout << "fail to load play time informaiton to display on screen\n";
+					break;
+				}
+				display_texture.render_texture_on_screen(400, i * 100 + 200, screen);
+			}
+			else
+			{
+				display_text << "Top " << i + 1 << ": 00:00:00";
+				if (!display_texture.loadFromRenderedText(display_text.str().c_str(), FONT_COLOR, screen))
+				{
+					cout << "fail to load play time informaiton to display on screen\n";
+					break;
+				}
+				display_texture.render_texture_on_screen(400, i * 100 + 200, screen);
+			}
+			
+		}
+
+		file.close();
 	}
 	else return;
 }
@@ -731,7 +767,7 @@ void MENU::Set_Play_Time()
 	time_play_text << setfill('0') << setw(2) << right << minute<< ":";
 	time_play_text << setfill('0') << setw(2) << right << second;
 
-	Set_Fastest_Game_Completion_Time(total_time_play);
+	if (player_win) Set_Fastest_Game_Completion_Time(total_time_play);
 }
 
 void MENU::Set_Fastest_Game_Completion_Time(const int& playtime)
@@ -748,32 +784,24 @@ void MENU::Set_Fastest_Game_Completion_Time(const int& playtime)
 	for (int i = 0; i < 5; ++i)
 	{
 		// check file have any thing to read or not
-		if (!file)
+		if (getline(file, s))
 		{
-			if (getline(file, s))
-			{
-				// change format hh:mm:ss to second
-				stringstream ss;
-				ss.str("");
-				ss << s;
+			// change format hh:mm:ss to second
+			stringstream ss;
+			ss.str("");
+			ss << s;
 
-				int hour, minute, second;
-				char ch;
+			int hour, minute, second;
+			char ch;
 
-				ss >> hour >> ch >> minute >> ch >> second;
-				second += (minute * 60 + hour * 3600);
+			ss >> hour >> ch >> minute >> ch >> second;
+			second += (minute * 60 + hour * 3600);
 
-				// push playing time in second unit to list 
-				playing_time_list_in_second_unit.push_back(second);
-			}
-			else
-			{
-				break;
-			}
+			// push playing time in second unit to list 
+			playing_time_list_in_second_unit.push_back(second);
 		}
 		else
 		{
-			// can read from file anymore then break loop
 			break;
 		}
 	}
