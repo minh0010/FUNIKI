@@ -1,21 +1,2 @@
-﻿  button.cpp
-  game_display.cpp
-C:\Users\Admin\Desktop\vs\FUNIKI\game_display.cpp(848,10): warning C4834: discarding return value of function with 'nodiscard' attribute
-  gun.cpp
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.20348.0\ucrt\corecrt_math_defines.h(28,1): warning C4005: 'M_PI': macro redefinition
-C:\Users\Admin\Desktop\vs\FUNIKI\SDL\SDL2-2.0.20\include\SDL_stdinc.h(568): message : see previous definition of 'M_PI'
-  jungle_pig_boss.cpp
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.20348.0\ucrt\corecrt_math_defines.h(28,1): warning C4005: 'M_PI': macro redefinition
-C:\Users\Admin\Desktop\vs\FUNIKI\SDL\SDL2-2.0.20\include\SDL_stdinc.h(568): message : see previous definition of 'M_PI'
-  jungle_pig_skills.cpp
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.20348.0\ucrt\corecrt_math_defines.h(28,1): warning C4005: 'M_PI': macro redefinition
-C:\Users\Admin\Desktop\vs\FUNIKI\SDL\SDL2-2.0.20\include\SDL_stdinc.h(568): message : see previous definition of 'M_PI'
-  main.cpp
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.20348.0\ucrt\corecrt_math_defines.h(28,1): warning C4005: 'M_PI': macro redefinition
-C:\Users\Admin\Desktop\vs\FUNIKI\SDL\SDL2-2.0.20\include\SDL_stdinc.h(568): message : see previous definition of 'M_PI'
-  mouse.cpp
-  player.cpp
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.20348.0\ucrt\corecrt_math_defines.h(28,1): warning C4005: 'M_PI': macro redefinition
-C:\Users\Admin\Desktop\vs\FUNIKI\SDL\SDL2-2.0.20\include\SDL_stdinc.h(568): message : see previous definition of 'M_PI'
-  Generating Code...
+﻿direction_vector.obj : warning LNK4204: 'C:\Users\Admin\Desktop\vs\FUNIKI\x64\Debug\vc143.pdb' is missing debugging information for referencing module; linking object as if no debug info
   FUNIKI.vcxproj -> C:\Users\Admin\Desktop\vs\FUNIKI\x64\Debug\FUNIKI.exe
