@@ -1,3 +1,5 @@
+#include <fstream>
+
 #include "tiles_map.h"
 #include "function.h"
 
@@ -79,4 +81,66 @@ bool player_in_win_area(SDL_Rect player)
 		return true;
 	}
 	return false;
+}
+
+bool set_tile_map_level_1(TILE* tiles[], string path)
+{
+	fstream file;
+	file.open(path);
+
+	if (!file.is_open())
+	{
+		cout << "fail to open file map";
+		return false;
+	}
+	else
+	{
+		int k = 0;
+		for (int i = 0; i < LEVEL1_HEIGHT; i += TILE_SIZE)
+		{
+			for (int j = 0; j < LEVEL1_WIDTH; j += TILE_SIZE)
+			{
+				int tile_type = -1;
+				file >> tile_type;
+				if (file.fail())
+				{
+					cout << "error loading map: file not found\n";
+					return false;
+				}
+				else
+				{
+					if (tile_type >= FLOOR_PATH && tile_type <= BLACK_PATH)
+					{
+						tiles[k] = new TILE(j, i, tile_type);
+						++k;
+					}
+					else
+					{
+						cout << "error loading map: invalid tile type\n";
+						return false;
+					}
+				}
+			}
+		}
+	}
+
+	return true;
+}
+
+bool load_map_level_1(TILE* tiles[], SDL_Renderer* screen)
+{
+	if (!load_map_texture("GAME_TEXTURE/GAME_MAP/path.png", screen))
+	{
+		cout << "Error with load map: fail to load map texture level 1 texture\n";
+		return false;
+	}
+	else
+	{
+		if (!set_tile_map_level_1(tiles, "GAME_TEXTURE/GAME_MAP/map_level1.txt"))
+		{
+			cout << "Error with load map: fail to load map file level 1 texture\n";
+			return false;
+		}
+	}
+	return true;
 }

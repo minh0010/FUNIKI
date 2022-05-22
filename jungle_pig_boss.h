@@ -15,8 +15,8 @@ const int JUNGLE_PIG_HEIGHT = 240;
 
 const int BOSS_total_idle_frame = 4;
 const int BOSS_total_run_frame = 8;
-static SDL_Rect BOSS_idle_frame[BOSS_total_idle_frame];
-static SDL_Rect BOSS_run_frame[BOSS_total_run_frame];
+static SDL_Rect Boss_idle_frame[BOSS_total_idle_frame];
+static SDL_Rect Boss_run_frame[BOSS_total_run_frame];
 
 enum BOSS_MODE
 {
@@ -60,11 +60,9 @@ public:
 
 	void Render_Jungle_Pig(SDL_Renderer* screen, SDL_Rect& camera);
 
-	void Render_Jungle_Pig_Blood(SDL_Renderer* screen);
+	
 
 	void Generate_New_Position();
-
-	void Auto(SDL_Rect player_rect);
 
 	void Load_Boss_Bullet_Fire_Toward_Player(SDL_Rect player_rect);
 
@@ -72,15 +70,23 @@ public:
 
 	void Load_Boss_Meteo();
 
+	void Auto(SDL_Rect player_rect);
+
 	void Handle_Skills(SDL_Renderer* screen, TILE* tiles[], SDL_Rect& camera);
 
+
+
 	void Handle_Life(vector<BULLET*> list);
+
+	void Render_Jungle_Pig_Blood(SDL_Renderer* screen);
+
+
+
+	void Set_Jungle_Pig_Frame();
 
 	void Set_Is_Alive(const bool& val) { Is_Jungle_Pig_Alive = val; }
 
 	void Set_Jungle_Pig_Start_To_Fight(const bool& val) { it_time_to_fight = val; }
-
-	void Set_Jungle_Pig_Frame();
 
 	void Set_Jungle_Pig_Start_Position(const int& x, const int& y)
 	{
@@ -88,9 +94,10 @@ public:
 		Jungle_Pig_Collision_Box.x = x + 50; Jungle_Pig_Collision_Box.y = y + 100;
 	}
 
+
 	void Set_It_Time_To_Fight(const bool& val) { it_time_to_fight = val; }
 
-	void Clear_Boss();
+	
 
 	bool Get_Is_Jungle_Pig_Alive() const { return Is_Jungle_Pig_Alive; }
 
@@ -101,6 +108,10 @@ public:
 	vector<BOSS_BULLET*> Get_Bullet_List() const { return bullet_list; }
 
 	vector<METEO*> Get_Meteo_List() const { return meteo_list; }
+
+
+
+	void Clear_Boss();
 
 	void Reset_From_Start();
 

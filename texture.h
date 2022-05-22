@@ -24,6 +24,7 @@ class TEXTURE
 {
 public:
 	TEXTURE();
+
 	~TEXTURE();
 
 	// create texture from picture

@@ -23,18 +23,11 @@ SDL_Window* WINDOW = NULL;
 SDL_Renderer* RENDER = NULL;
 
 
-const string map1_path_to_file = "GAME_TEXTURE/GAME_MAP/map_level1.txt";
-const string map1_path_to_texture = "GAME_TEXTURE/GAME_MAP/path.png";
-
 bool init();
 
 bool load_media();
 
 void close(TILE* tiles[]);
-
-bool set_tile_map_level_1(TILE* tiles[], string path);
-
-bool load_map_level_1(TILE* tiles[]);
 
 void reload_game();
 
@@ -120,7 +113,7 @@ bool load_media()
 
 
 	// load tile map level 1 
-	if (!load_map_level_1(map1))
+	if (!load_map_level_1(map1, RENDER))
 	{
 		cout << "error with load map level 1: \n";
 		return false;
@@ -200,67 +193,7 @@ void close(TILE* tiles[])
 	SDL_Quit();
 }
 
-bool set_tile_map_level_1(TILE* tiles[], string path)
-{
-	fstream file;
-	file.open(path);
 
-	if (!file.is_open())
-	{
-		cout << "fail to open file map";
-		return false;
-	}
-	else
-	{
-		int k = 0;
-		for (int i = 0; i < LEVEL1_HEIGHT; i += TILE_SIZE)
-		{
-			for (int j = 0; j < LEVEL1_WIDTH; j += TILE_SIZE)
-			{
-				int tile_type = -1;
-				file >> tile_type;
-				if (file.fail())
-				{
-					cout << "error loading map: file not found\n";
-					return false;
-				}
-				else
-				{
-					if (tile_type >= FLOOR_PATH && tile_type <= BLACK_PATH)
-					{
-						tiles[k] = new TILE(j, i, tile_type);
-						++k;
-					}
-					else
-					{
-						cout << "error loading map: invalid tile type\n";
-						return false;
-					}
-				}
-			}
-		}
-	}
-
-	return true;
-}
-
-bool load_map_level_1(TILE* tiles[])
-{
-	if (!load_map_texture(map1_path_to_texture, RENDER))
-	{
-		cout << "Error with load map: fail to load map texture level 1 texture\n";
-		return false;
-	}
-	else
-	{
-		if (!set_tile_map_level_1(tiles, map1_path_to_file))
-		{
-			cout << "Error with load map: fail to load map file level 1 texture\n";
-			return false;
-		}
-	}
-	return true;
-}
 
 void reload_game()
 {
@@ -282,6 +215,15 @@ void play_game()
 	while (!quit)
 	{
 		FUNIKI_MENU.Handle_sound();
+		if (FUNIKI_MENU.Get_Turn_Off_Sound())
+		{
+			main_Reaper.Set_Use_Sound_Effect(false);
+		}
+		else
+		{
+			main_Reaper.Set_Use_Sound_Effect(true);
+		}
+
 		if (FUNIKI_MENU.Get_Request_A_Reload())
 		{
 			reload_game();
@@ -350,7 +292,7 @@ void play_game()
 
 				main_Reaper.Render_Reaper_On_Screen(RENDER, camera);
 				main_Reaper.Handle_Bullet_List(RENDER, camera, map1, main_Jungle_Pig.Get_Jungle_Pig_Collision_Box());
-				main_Reaper.Render_Reaper_Gun(RENDER);
+				main_Reaper.Render_Gun(RENDER);
 				main_Reaper.Render_Reaper_Blood(RENDER);
 
 				if (player_in_win_area(main_Reaper.Get_Reaper_Collision_Box()))

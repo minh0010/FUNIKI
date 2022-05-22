@@ -59,3 +59,7 @@ void open_gate_level_1(TILE* map[], int gate[]);
 bool player_in_play_area(SDL_Rect player);
 
 bool player_in_win_area(SDL_Rect player);
+
+bool set_tile_map_level_1(TILE* tiles[], string path);
+
+bool load_map_level_1(TILE* tiles[], SDL_Renderer* screen);

@@ -5,6 +5,7 @@
 #include "button.h"
 #include "mouse.h"
 
+
 // total menu
 
 enum STATUS
@@ -41,6 +42,7 @@ public:
 	void Render_Background(SDL_Renderer* screen);
 
 
+
 	void Set_Start_Screen();
 
 	void Set_PLaying_Screen();
@@ -57,6 +59,8 @@ public:
 
 	void Set_Open_Ranking_Screen();
 
+
+
 	void Set_Screen_Status(const int& val) { Screen_Status = val; }
 
 	void Set_Request_A_Reload(const bool& val) { request_a_reload = val; }
@@ -72,6 +76,8 @@ public:
 	bool Get_Request_A_Reload() const { return request_a_reload; }
 
 	int Get_Screen_Status() const { return Screen_Status; }
+
+	bool Get_Turn_Off_Sound() const { return turn_off_sound; }
 private:
 
 	// control menu button

@@ -12,11 +12,15 @@ public:
 
 	~Gun();
 
+
+
 	bool Load_Gun_Texture(SDL_Renderer* screen);
 
 	void Update(SDL_Rect& camera);
 
 	void Render_Gun(SDL_Renderer* screen);
+
+
 
 	int Get_x() const { return gun_rect.x; }
 

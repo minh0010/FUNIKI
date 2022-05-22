@@ -358,8 +358,11 @@ void MENU::Handle_All_Button(SDL_Event& e, bool& quit)
 	next_button.handle_button(e);
 	rank_button.handle_button(e);
 
+
+	// check what button is click
 	if (start_play_button.get_is_button_click())
 	{
+		// change to new screen and setting what button use in that screen
 		Set_Start_Time();
 
 		start_play_button.set_is_button_click(false);
@@ -368,68 +371,89 @@ void MENU::Handle_All_Button(SDL_Event& e, bool& quit)
 		Set_PLaying_Screen();
 
 		change_music = true;
+
+		// make sound when click button
 		Mix_PlayChannel(-1, Click_Button, 0);
 	}
 	else if (quit_button.get_is_button_click())
 	{
+		// make sound when click button
 		Mix_PlayChannel(-1, Click_Button, 0);
+
+		// set quit game
 		quit = true;
 	}
 	else if (mini_menu_button.get_is_button_click())
 	{
+		// change to new screen and setting what button use in that screen
 		mini_menu_button.set_is_button_click(false);
 		Screen_Status = PAUSE_SCREEN;
 		Set_Pause_Screen();
 
 		change_music = true;
+
+		// make sound when click button
 		Mix_PlayChannel(-1, Click_Button, 0);
 	}
 	else if (continue_button.get_is_button_click())
 	{
+		// change to new screen and setting what button use in that screen
 		continue_button.set_is_button_click(false);
 		Screen_Status = PLAY_SCREEN;
 		Set_PLaying_Screen();
 
 		change_music = true;
+
+		// make sound when click button
 		Mix_PlayChannel(-1, Click_Button, 0);
 	}
 	else if (back_to_start_button.get_is_button_click())
 	{
+		// change to new screen and setting what button use in that screen
 		back_to_start_button.set_is_button_click(false);
 		Screen_Status = START_SCREEN;
 		request_a_reload = true;
 		Set_Start_Screen();
 
 		change_music = true;
+
+		// make sound when click button
 		Mix_PlayChannel(-1, Click_Button, 0);
 	}
 	else if (yes_button.get_is_button_click())
 	{
+		// reset start playing time to count top
 		Set_Start_Time();
 
+		// change to new screen and setting what button use in that screen
 		yes_button.set_is_button_click(false);
 		Screen_Status = PLAY_SCREEN;
 		request_a_reload = true;
 		Set_PLaying_Screen();
 
 		change_music = true;
+
+		// make sound when click button
 		Mix_PlayChannel(-1, Click_Button, 0);
 	}
 	else if (no_button.get_is_button_click())
 	{
+		// change to new screen and setting what button use in that screen
 		no_button.set_is_button_click(false);
 		Screen_Status = START_SCREEN;
 		request_a_reload = true;
 		Set_Start_Screen();
 
 		change_music = true;
+
+		// make sound when click button
 		Mix_PlayChannel(-1, Click_Button, 0);
 	}
 	else if (turn_on_off_sound_button.get_is_button_click())
 	{
 		turn_on_off_sound_button.set_is_button_click(false);
 
-
+		// turn off soundtrack
 		if (turn_off_sound == true)
 		{
 			turn_off_sound = false;
@@ -446,26 +470,33 @@ void MENU::Handle_All_Button(SDL_Event& e, bool& quit)
 			turn_on_off_sound_button.set_button_clip_down(15, 1012, 166, 164);
 			turn_on_off_sound_button.set_button_clip_up(15, 812, 166, 164);
 		}
+
+		// make sound when click button
 		Mix_PlayChannel(-1, Click_Button, 0);
 	}
 	else if (turn_on_help_screen_button.get_is_button_click())
 	{
+		// change to new screen and setting what button use in that screen
 		turn_on_help_screen_button.set_is_button_click(false);
 		Screen_Status = HELP_SCREEN;
 		Set_Help_Screen();
 
+		// make sound when click button
 		Mix_PlayChannel(-1, Click_Button, 0);
 	}
 	else if (exit_help_screen_button.get_is_button_click())
 	{
+		// change to new screen and setting what button use in that screen
 		exit_help_screen_button.set_is_button_click(false);
 		Screen_Status = START_SCREEN;
 		Set_Start_Screen();
 
+		// make sound when click button
 		Mix_PlayChannel(-1, Click_Button, 0);
 	}
 	else if (next_button.get_is_button_click())
 	{
+		// change to new screen and setting what button use in that screen
 		next_button.set_is_button_click(false);
 		if (player_win)
 		{
@@ -482,10 +513,12 @@ void MENU::Handle_All_Button(SDL_Event& e, bool& quit)
 			Set_Screen_After_Lose();
 		}
 
+		// make sound when click button
 		Mix_PlayChannel(-1, Click_Button, 0);
 	}
 	else if (rank_button.get_is_button_click())
 	{
+		// change to new screen and setting what button use in that screen
 		rank_button.set_is_button_click(false);
 		if (Screen_Status == START_SCREEN)
 		{
@@ -502,6 +535,7 @@ void MENU::Handle_All_Button(SDL_Event& e, bool& quit)
 			rank_button.set_button_rect(SCREEN_WIDTH - 260, SCREEN_HEIGHT - 70, 40, 40);
 		}
 
+		// make sound when click button
 		Mix_PlayChannel(-1, Click_Button, 0);
 	}
 }

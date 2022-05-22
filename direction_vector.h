@@ -53,4 +53,5 @@ struct Direction_Vector
 	float b;
 };
 
+
 float Cosin_Value_Between_Two_Vector(Direction_Vector v1, Direction_Vector v2);

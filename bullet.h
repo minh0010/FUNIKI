@@ -22,6 +22,8 @@ public:
 
 	~BULLET();
 
+
+
 	void Handle_Bullet(TILE* tiles[]);
 
 	void Render_Bullet_On_Screen(SDL_Renderer* screen, SDL_Rect& camera);
@@ -31,6 +33,7 @@ public:
 	void Set_Vector_Move_Direction(Direction_Vector in_vector) { move_direction = in_vector; }
 
 	void Set_Is_Bullet_Move(const bool& val) { Is_Bullet_Move = val; }
+
 
 
 	SDL_Rect Get_Bullet_Rect() const { return Bullet_Rect; }

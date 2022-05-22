@@ -20,21 +20,21 @@ public:
 
 	~BOSS_BULLET();
 
-	void Handle_BOSS_BULLET(TILE* tiles[]);
+	void Handle_Boss_Bullet(TILE* tiles[]);
 
-	void Render_BOSS_BULLET_On_Screen(SDL_Renderer* screen, SDL_Rect& camera);
+	void Render_Boss_Bullet_On_Screen(SDL_Renderer* screen, SDL_Rect& camera);
 
 	void Set_start_position(const int& x, const int& y) { boss_bullet_rect.x = x; boss_bullet_rect.y = y; }
 
 	void Set_Vector_Move_Direction(const Direction_Vector& in_vector) { move_direction = in_vector; }
 
-	void Set_Is_BOSS_BULLET_Move(const bool& val) { is_bullet_move = val; }
+	void Set_Is_Boss_Bullet_Move(const bool& val) { is_bullet_move = val; }
 
 	void Set_Bullet_Move_Speed(const int& val) { BOSS_BULLET_MOVE_SPEED = val; }
 
-	SDL_Rect Get_BOSS_BULLET_Rect() const { return boss_bullet_rect; }
+	SDL_Rect Get_Boss_Bullet_Rect() const { return boss_bullet_rect; }
 
-	bool Get_Is_BOSS_BULLET_Move() const { return is_bullet_move; }
+	bool Get_Is_Boss_Bullet_Move() const { return is_bullet_move; }
 private:
 	SDL_Rect boss_bullet_rect;
 	bool is_bullet_move;
@@ -91,6 +91,9 @@ public:
 
 	void Set_Lava_Center() { lava_center_x = LAVA_POS.x + LAVA_SIZE / 2; lava_center_y = LAVA_POS.y + 20; }
 
+
+
+
 	int Get_Boss_Bullet_x() const { return METEO_POS.x; }
 
 	int Get_Boss_Bullet_y() const { return METEO_POS.y; }
@@ -103,13 +106,16 @@ public:
 
 	int Get_Lava_Center_y() const { return lava_center_y; }
 
-	void delay_lava_pool();
 
 	void handle_meteo();
 
 	void render_meteo(SDL_Renderer* screen, SDL_Rect& camera);
 
+
+
 	void render_meteo_falling_position(SDL_Renderer* screen, SDL_Rect& camera);
+
+	void delay_lava_pool();
 
 	bool delay_damage();
 private:

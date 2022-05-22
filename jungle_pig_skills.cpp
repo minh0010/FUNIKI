@@ -16,7 +16,7 @@ BOSS_BULLET::~BOSS_BULLET()
 
 }
 
-void BOSS_BULLET::Handle_BOSS_BULLET(TILE* tiles[])
+void BOSS_BULLET::Handle_Boss_Bullet(TILE* tiles[])
 {
 	boss_bullet_rect.x += (int)(BOSS_BULLET_MOVE_SPEED * move_direction.a);
 	boss_bullet_rect.y += (int)(BOSS_BULLET_MOVE_SPEED * move_direction.b);
@@ -27,7 +27,7 @@ void BOSS_BULLET::Handle_BOSS_BULLET(TILE* tiles[])
 	}
 }
 
-void BOSS_BULLET::Render_BOSS_BULLET_On_Screen(SDL_Renderer* screen, SDL_Rect& camera)
+void BOSS_BULLET::Render_Boss_Bullet_On_Screen(SDL_Renderer* screen, SDL_Rect& camera)
 {
 	if (is_bullet_move)
 	{

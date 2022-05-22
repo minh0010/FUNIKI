@@ -22,6 +22,7 @@ REAPER::REAPER()
 	Reaper_look_direction = SDL_FLIP_NONE;
 
 	fire_bullet_effect = NULL;
+	use_sound_effect = true;
 }
 
 REAPER::~REAPER()
@@ -97,10 +98,10 @@ void REAPER::Handle_Reaper(SDL_Event& e, SDL_Rect& camera)
 		{
 			switch (e.key.keysym.sym)
 			{
-			case SDLK_w: Reaper_Vely -= REAPER_MOVE_SPEED; Is_Reaper_Move = true; Frame = 0; break;
-			case SDLK_s: Reaper_Vely += REAPER_MOVE_SPEED; Is_Reaper_Move = true; Frame = 0; break;
-			case SDLK_a: Reaper_Velx -= REAPER_MOVE_SPEED; Is_Reaper_Move = true; Frame = 0; break;
-			case SDLK_d: Reaper_Velx += REAPER_MOVE_SPEED; Is_Reaper_Move = true; Frame = 0; break;
+			case SDLK_w: Reaper_Vely -= REAPER_MOVE_SPEED; Is_Reaper_Move = true; break;
+			case SDLK_s: Reaper_Vely += REAPER_MOVE_SPEED; Is_Reaper_Move = true; break;
+			case SDLK_a: Reaper_Velx -= REAPER_MOVE_SPEED; Is_Reaper_Move = true; break;
+			case SDLK_d: Reaper_Velx += REAPER_MOVE_SPEED; Is_Reaper_Move = true; break;
 			}
 		}
 		// when the keyboard is released
@@ -153,7 +154,7 @@ void REAPER::Handle_Reaper(SDL_Event& e, SDL_Rect& camera)
 			reaper_bullet_list.push_back(newBullet);
 
 			// make fire bullet sound
-			Mix_PlayChannel(-1, fire_bullet_effect, 0);
+			if (use_sound_effect) Mix_PlayChannel(-1, fire_bullet_effect, 0);
 		}
 
 
@@ -236,13 +237,13 @@ void REAPER::Render_Reaper_On_Screen(SDL_Renderer* screen, SDL_Rect& camera)
 	}
 	else if (!Is_Reaper_Move)
 	{
-		TEXTURE::render_texture_on_screen(Reaper_Rect.x - camera.x, Reaper_Rect.y - camera.y, screen, &Reaper_Idle_frame[Frame / 3], 0.0, NULL, Reaper_look_direction);
+		TEXTURE::render_texture_on_screen(Reaper_Rect.x - camera.x, Reaper_Rect.y - camera.y, screen, &Reaper_Idle_frame[Frame /4], 0.0, NULL, Reaper_look_direction);
 		Frame++;
-		if (Frame / 3 >= Reaper_number_idle_frame) Frame = 0;
+		if (Frame / 4 >= Reaper_number_idle_frame) Frame = 0;
 	}
 }
 
-void REAPER::Render_Reaper_Gun(SDL_Renderer* screen)
+void REAPER::Render_Gun(SDL_Renderer* screen)
 {
 	Reaper_Gun.Render_Gun(screen);
 }
@@ -285,10 +286,10 @@ void REAPER::Handle_Reaper_Life(vector<BOSS_BULLET*> jungle_pig_bullet_list, vec
 			if (jungle_pig_bullet_list[i] != NULL)
 			{
 				// when there is a collision with an bullet, reduce player blood 
-				if (check_collision(jungle_pig_bullet_list[i]->Get_BOSS_BULLET_Rect(), Reaper_Collision_Box))
+				if (check_collision(jungle_pig_bullet_list[i]->Get_Boss_Bullet_Rect(), Reaper_Collision_Box))
 				{
 					Reaper_Blood.Reduce_Blood_By_Damage(BOSS_BULLET_DAMAGE);
-					jungle_pig_bullet_list[i]->Set_Is_BOSS_BULLET_Move(false);
+					jungle_pig_bullet_list[i]->Set_Is_Boss_Bullet_Move(false);
 					if (Reaper_Blood.Get_Current_Blood() <= 0) Is_Reaper_Alive = false;
 				}
 			}

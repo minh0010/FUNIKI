@@ -121,13 +121,13 @@ void JUNGLEPIG::Render_Jungle_Pig(SDL_Renderer* screen, SDL_Rect& camera)
 	{
 		if (is_jungle_pig_move)
 		{
-			TEXTURE::render_texture_on_screen(Jungle_Pig_Rect.x - camera.x, Jungle_Pig_Rect.y - camera.y, screen, &BOSS_run_frame[frame / 4], 0.0, NULL, boss_look_direction);
+			TEXTURE::render_texture_on_screen(Jungle_Pig_Rect.x - camera.x, Jungle_Pig_Rect.y - camera.y, screen, &Boss_run_frame[frame / 4], 0.0, NULL, boss_look_direction);
 			frame++;
 			if (frame / 4 >= BOSS_total_run_frame) frame = 0;
 		}
 		else
 		{
-			TEXTURE::render_texture_on_screen(Jungle_Pig_Rect.x - camera.x, Jungle_Pig_Rect.y - camera.y, screen, &BOSS_idle_frame[frame / 8], 0.0, NULL, boss_look_direction);
+			TEXTURE::render_texture_on_screen(Jungle_Pig_Rect.x - camera.x, Jungle_Pig_Rect.y - camera.y, screen, &Boss_idle_frame[frame / 8], 0.0, NULL, boss_look_direction);
 			frame++;
 			if (frame / 8 >= BOSS_total_idle_frame) frame = 0;
 		}
@@ -251,7 +251,7 @@ void JUNGLEPIG::Load_Boss_Bullet_Fire_Toward_Player(SDL_Rect player_rect)
 		newBullet->Set_Vector_Move_Direction(nomalize_vector);
 
 		// set bullet moving on screen
-		newBullet->Set_Is_BOSS_BULLET_Move(true);
+		newBullet->Set_Is_Boss_Bullet_Move(true);
 
 		// set bullet moving speed
 		newBullet->Set_Bullet_Move_Speed(15);
@@ -275,7 +275,7 @@ void JUNGLEPIG::Load_Boss_Bullet_Fire_In_12_Direction()
 		newBullet->Set_Vector_Move_Direction(v[i]);
 
 		// set bullet moving on screen
-		newBullet->Set_Is_BOSS_BULLET_Move(true);
+		newBullet->Set_Is_Boss_Bullet_Move(true);
 
 		// set bullet moving speed
 		newBullet->Set_Bullet_Move_Speed(5);
@@ -318,10 +318,10 @@ void JUNGLEPIG::Handle_Skills(SDL_Renderer* screen, TILE* tiles[], SDL_Rect& cam
 		{
 			if (bullet_list[i] != NULL)
 			{
-				if (bullet_list[i]->Get_Is_BOSS_BULLET_Move())
+				if (bullet_list[i]->Get_Is_Boss_Bullet_Move())
 				{
-					bullet_list[i]->Handle_BOSS_BULLET(tiles);
-					bullet_list[i]->Render_BOSS_BULLET_On_Screen(screen, camera);
+					bullet_list[i]->Handle_Boss_Bullet(tiles);
+					bullet_list[i]->Render_Boss_Bullet_On_Screen(screen, camera);
 				}
 				else
 				{
@@ -381,19 +381,19 @@ void JUNGLEPIG::Handle_Life(vector<BULLET*> list)
 
 void JUNGLEPIG::Set_Jungle_Pig_Frame()
 {
-	BOSS_idle_frame[0] = { 196,260,920,800 };
-	BOSS_idle_frame[1] = { 1040,260,920,800 };
-	BOSS_idle_frame[2] = { 1915,260,920,800 };
-	BOSS_idle_frame[3] = { 2830,260,920,800 };
+	Boss_idle_frame[0] = { 196,260,920,800 };
+	Boss_idle_frame[1] = { 1040,260,920,800 };
+	Boss_idle_frame[2] = { 1915,260,920,800 };
+	Boss_idle_frame[3] = { 2830,260,920,800 };
 
-	BOSS_run_frame[0] = { 200,2120,920,800 };
-	BOSS_run_frame[1] = { 1070,2120,920,800 };
-	BOSS_run_frame[2] = { 1950,2120,920,800 };
-	BOSS_run_frame[3] = { 2800,2120,920,800 };
-	BOSS_run_frame[4] = { 3660,2120,920,800 };
-	BOSS_run_frame[5] = { 4555,2120,920,800 };
-	BOSS_run_frame[6] = { 5420,2120,920,800 };
-	BOSS_run_frame[7] = { 6275,2120,920,800 };
+	Boss_run_frame[0] = { 200,2120,920,800 };
+	Boss_run_frame[1] = { 1070,2120,920,800 };
+	Boss_run_frame[2] = { 1950,2120,920,800 };
+	Boss_run_frame[3] = { 2800,2120,920,800 };
+	Boss_run_frame[4] = { 3660,2120,920,800 };
+	Boss_run_frame[5] = { 4555,2120,920,800 };
+	Boss_run_frame[6] = { 5420,2120,920,800 };
+	Boss_run_frame[7] = { 6275,2120,920,800 };
 }
 
 void JUNGLEPIG::Clear_Boss()

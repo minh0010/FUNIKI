@@ -19,6 +19,7 @@ public:
 
 	void Render_Blood_Bar(SDL_Renderer* screen);
 
+
 	void Set_Start_Blood(const int& val);
 
 	void Set_Display_Blood(const int& val);
@@ -30,6 +31,7 @@ public:
 	void Set_Remain_Blood_On_Screen(const int& x, const int& y, const int& w, const int& h);
 
 	void Set_Display_Blood_Bar_On_Screen(const int& x, const int& y, const int& w, const int& h);
+
 
 	void Reduce_Blood_By_Damage(const int& val);
 

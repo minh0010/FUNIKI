@@ -2,10 +2,11 @@
 
 #include "texture.h"
 
-class BUTTON :public TEXTURE
+class BUTTON : public TEXTURE
 {
 public:
-	const int total_button_clip = 4;
+	const int total_button_clip = 4; 
+
 
 	enum mouse_status
 	{
@@ -56,9 +57,14 @@ public:
 		button_clip[mouse_up].w = w;
 		button_clip[mouse_up].h = h;
 	}
+
+
+
 	bool load_button(SDL_Renderer* screen, string path, bool use_set_color_key = false, Uint8 RED = 0, Uint8 GREEN = 0, Uint8 BLUE = 0);
 	void handle_button(SDL_Event& e);
 	void render_button(SDL_Renderer* screen);
+
+
 	bool get_is_button_click() const { return is_button_click; }
 	bool get_is_button_in_use() const { return in_use_button; }
 private:
