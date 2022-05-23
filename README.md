@@ -35,7 +35,6 @@
 - Giá game: miễn phí.
 
 
-
 ## Cách tải game
 
 - **Bước 1: Bấm vào đường link liên kết dưới đây.**
@@ -139,6 +138,8 @@
   ![Screenshot (56)](https://user-images.githubusercontent.com/100124910/169734737-14854870-a2e5-4a69-a7c8-99040db98137.png)
 
 
+- Để có cái nhìn khái quát hơn về chức năng của game xin mời thầy cô và các bạn tham khảo video theo đường dẫn dưới đây:
+     https://youtu.be/dwmxRPqQIT8
 
 
 ## Một số kĩ thuật được sử dụng
