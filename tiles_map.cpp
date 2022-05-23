@@ -26,8 +26,7 @@ void TILE::render_tile(SDL_Rect& camera, SDL_Renderer* screen)
 
 bool load_map_texture(string path, SDL_Renderer* screen)
 {
-	bool load = map_texture.load_texture_from_file(path, screen);
-	if (!load)
+	if (!map_texture.load_texture_from_file(path, screen))
 	{
 		return false;
 	}
@@ -44,7 +43,8 @@ bool load_map_texture(string path, SDL_Renderer* screen)
 		tile_sprite[6] = { 192,0,32,32 };
 		tile_sprite[7] = { 224,0,32,32 };
 	}
-	return load;
+
+	return true;
 }
 
 void close_gate_level_1(TILE* map[], int gate[])

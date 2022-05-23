@@ -31,7 +31,10 @@ bool MOUSE::Load_Mouse_Texture(SDL_Renderer* screen)
 
 void MOUSE::Render_Mouse(SDL_Renderer* screen)
 {
+	// get mouse position
 	int x, y;
 	SDL_GetMouseState(&x, &y);
+
+	// render on mouse position
 	TEXTURE::render_texture_on_screen(x, y, screen, &mouse_rect);
 }

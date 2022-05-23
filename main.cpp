@@ -212,9 +212,13 @@ void play_game()
 
 	Uint32 timemm = 0;
 
+	// start gameloop
 	while (!quit)
 	{
+		// make sound 
 		FUNIKI_MENU.Handle_sound();
+
+		// check if player turn of or turn on sound
 		if (FUNIKI_MENU.Get_Turn_Off_Sound())
 		{
 			main_Reaper.Set_Use_Sound_Effect(false);
@@ -224,12 +228,14 @@ void play_game()
 			main_Reaper.Set_Use_Sound_Effect(true);
 		}
 
+		// check reload request
 		if (FUNIKI_MENU.Get_Request_A_Reload())
 		{
 			reload_game();
 			FUNIKI_MENU.Set_Request_A_Reload(false);
 		}
 
+		// handle event
 		while (SDL_PollEvent(&e) != 0)
 		{
 			if (e.type == SDL_QUIT)
@@ -248,8 +254,10 @@ void play_game()
 		SDL_SetRenderDrawColor(RENDER, 40, 40, 40, 255);
 		SDL_RenderClear(RENDER);
 
+		// display background
 		FUNIKI_MENU.Render_Background(RENDER);
 
+		// check if menu are in play screen then display player, monster and map
 		if (FUNIKI_MENU.Get_Screen_Status() == PLAY_SCREEN)
 		{
 			for (int i = 0; i < TOTAL_TILE_LEVEL_1; ++i) map1[i]->render_tile(camera, RENDER);
@@ -258,17 +266,24 @@ void play_game()
 			// ingame boss 
 			if (main_Jungle_Pig.Get_Is_Jungle_Pig_Alive())
 			{
+				// boss start moving when player move in play area
 				if (player_in_play_area(main_Reaper.Get_Reaper_Collision_Box()))
 				{
 					main_Jungle_Pig.Set_It_Time_To_Fight(true);
 					close_gate_level_1(map1, gate_level_1);
 				}
 
+				// update and render skills
 				main_Jungle_Pig.Handle_Skills(RENDER, map1, camera);
+
+				// auto use random skills
 				main_Jungle_Pig.Auto(main_Reaper.Get_Reaper_Rect());
+
+				// render boss on screen
 				main_Jungle_Pig.Render_Jungle_Pig(RENDER, camera);
 				main_Jungle_Pig.Render_Jungle_Pig_Blood(RENDER);
 
+				// player can't do damage when out side play area
 				if (player_in_play_area(main_Reaper.Get_Reaper_Collision_Box()))
 				{
 					main_Jungle_Pig.Handle_Life(main_Reaper.Get_Bullet_List());
@@ -276,6 +291,7 @@ void play_game()
 			}
 			else
 			{
+				// if player defeat boss then clear boss
 				main_Jungle_Pig.Clear_Boss();
 				open_gate_level_1(map1, gate_level_1);
 			}
@@ -284,17 +300,25 @@ void play_game()
 			// ingame player
 			if (main_Reaper.Get_Is_Reaper_Alive())
 			{
+				// update and render player gun
 				main_Reaper.Handle_gun(camera);
+				main_Reaper.Render_Gun(RENDER);
+
+				// moving player
 				main_Reaper.Reaper_Move(map1);
+
+				// center camera
 				main_Reaper.Set_Reaper_Camera(camera);
 
+				// display player on screeen
+				main_Reaper.Render_Reaper_On_Screen(RENDER, camera);
 				main_Reaper.Handle_Reaper_Life(main_Jungle_Pig.Get_Bullet_List(), main_Jungle_Pig.Get_Meteo_List());
 
-				main_Reaper.Render_Reaper_On_Screen(RENDER, camera);
+				// undate and render bullet list
 				main_Reaper.Handle_Bullet_List(RENDER, camera, map1, main_Jungle_Pig.Get_Jungle_Pig_Collision_Box());
-				main_Reaper.Render_Gun(RENDER);
 				main_Reaper.Render_Reaper_Blood(RENDER);
 
+				// if player win change screen to see result
 				if (player_in_win_area(main_Reaper.Get_Reaper_Collision_Box()))
 				{
 					FUNIKI_MENU.Set_Player_Win(true);
@@ -305,7 +329,7 @@ void play_game()
 				}
 			}
 			else
-			{	
+			{	// if player lose change screen to see result
 				FUNIKI_MENU.Set_Player_Win(false);
 				FUNIKI_MENU.Set_Play_Time();
 				FUNIKI_MENU.Set_Screen_Status(RESULTS_SCREEN);
@@ -314,9 +338,13 @@ void play_game()
 			}
 		}
 
+		// render game button
 		FUNIKI_MENU.Render_Menu_Button(RENDER);
+
+		// change mouse display
 		mouse.Render_Mouse(RENDER);
 
+		// update screen
 		SDL_RenderPresent(RENDER);
 	}
 }
