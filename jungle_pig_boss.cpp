@@ -17,7 +17,7 @@ JUNGLEPIG::JUNGLEPIG()
 	jungle_pig_skill = 0;
 	skills_rotTime = 0;
 	move_rotTime = 0;
-	fire_toward_to_player_rotTime;
+	fire_toward_to_player_rotTime = 0;
 
 	BOSS_MODE = EASY;
 

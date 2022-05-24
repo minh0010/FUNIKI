@@ -1,24 +1,9 @@
-﻿  bullet.cpp
+﻿  jungle_pig_boss.cpp
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.20348.0\ucrt\corecrt_math_defines.h(28,1): warning C4005: 'M_PI': macro redefinition
 C:\Users\Admin\Desktop\vs\FUNIKI\SDL\SDL2-2.0.20\include\SDL_stdinc.h(568): message : see previous definition of 'M_PI'
-  function.cpp
-  jungle_pig_boss.cpp
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.20348.0\ucrt\corecrt_math_defines.h(28,1): warning C4005: 'M_PI': macro redefinition
-C:\Users\Admin\Desktop\vs\FUNIKI\SDL\SDL2-2.0.20\include\SDL_stdinc.h(568): message : see previous definition of 'M_PI'
-  jungle_pig_skills.cpp
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.20348.0\ucrt\corecrt_math_defines.h(28,1): warning C4005: 'M_PI': macro redefinition
-C:\Users\Admin\Desktop\vs\FUNIKI\SDL\SDL2-2.0.20\include\SDL_stdinc.h(568): message : see previous definition of 'M_PI'
-  main.cpp
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.20348.0\ucrt\corecrt_math_defines.h(28,1): warning C4005: 'M_PI': macro redefinition
-C:\Users\Admin\Desktop\vs\FUNIKI\SDL\SDL2-2.0.20\include\SDL_stdinc.h(568): message : see previous definition of 'M_PI'
-  mouse.cpp
-  player.cpp
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.20348.0\ucrt\corecrt_math_defines.h(28,1): warning C4005: 'M_PI': macro redefinition
-C:\Users\Admin\Desktop\vs\FUNIKI\SDL\SDL2-2.0.20\include\SDL_stdinc.h(568): message : see previous definition of 'M_PI'
-  tiles_map.cpp
   Generating code
-  6 of 798 functions ( 0.8%) were compiled, the rest were copied from previous compilation.
+  75 of 798 functions ( 9.4%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
+    1 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   FUNIKI.vcxproj -> C:\Users\Admin\Desktop\vs\FUNIKI\x64\Release\FUNIKI.exe
