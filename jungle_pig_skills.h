@@ -10,7 +10,7 @@
 
 const int BOSS_BULLET_DISPLAY_WIDTH = 60;
 const int BOSS_BULLET_DISPLAY_HEIGHT = 60;
-const int BOSS_BULLET_DAMAGE = 5;
+const int BOSS_BULLET_DAMAGE = 20;
 static TEXTURE boss_bullet_texture;
 
 class BOSS_BULLET
@@ -64,7 +64,7 @@ const int METEO_SPEED = 10;
 const int LAVA_SIZE = 240;
 const double LAVA_RADIUS = 120.0;
 const int RED_X_SIZE = 40;
-const int LAVA_DAMAGE = 5;
+const int LAVA_DAMAGE = 20;
 
 static TEXTURE Meteo_Texture;
 static TEXTURE Lava_Texuture;

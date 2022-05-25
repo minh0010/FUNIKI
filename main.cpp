@@ -300,9 +300,7 @@ void play_game()
 			// ingame player
 			if (main_Reaper.Get_Is_Reaper_Alive())
 			{
-				// update and render player gun
-				main_Reaper.Handle_gun(camera);
-				main_Reaper.Render_Gun(RENDER);
+				
 
 				// moving player
 				main_Reaper.Reaper_Move(map1);
@@ -313,6 +311,10 @@ void play_game()
 				// display player on screeen
 				main_Reaper.Render_Reaper_On_Screen(RENDER, camera);
 				main_Reaper.Handle_Reaper_Life(main_Jungle_Pig.Get_Bullet_List(), main_Jungle_Pig.Get_Meteo_List());
+
+				// update and render player gun
+				main_Reaper.Handle_gun(camera);
+				main_Reaper.Render_Gun(RENDER);
 
 				// undate and render bullet list
 				main_Reaper.Handle_Bullet_List(RENDER, camera, map1, main_Jungle_Pig.Get_Jungle_Pig_Collision_Box());
